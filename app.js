@@ -1,6 +1,11 @@
 (function () {
   "use strict";
 
+  var y = document.getElementById("y");
+  if (y) {
+    y.textContent = String(new Date().getFullYear());
+  }
+
   var form = document.getElementById("prequal-form");
   if (!form) return;
 
@@ -20,7 +25,7 @@
       if (allChecked) {
         cta.classList.remove("is-disabled");
         cta.setAttribute("aria-disabled", "false");
-        cta.setAttribute("tabindex", "0");
+        cta.removeAttribute("tabindex");
       } else {
         cta.classList.add("is-disabled");
         cta.setAttribute("aria-disabled", "true");

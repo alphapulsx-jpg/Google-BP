@@ -13,34 +13,55 @@
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
 
-    <header class="site-header">
-      <div class="wrap">
-        <p class="eyebrow">Google Business Profile · fixed-scope sprint</p>
-        <h1 id="main">More calls from Google in 7 days — without ads</h1>
-        <p class="lede">
-          GBP cleanup for <strong>local trades &amp; service businesses</strong> in
-          <strong>your city or region</strong>. Edit this line in <code>index.html</code> to name your
-          trade and area.
+    <header class="hero" aria-labelledby="main">
+      <div class="hero__fan" aria-hidden="true">
+        <span class="hero__fan-card hero__fan-card--1"></span>
+        <span class="hero__fan-card hero__fan-card--2"></span>
+        <span class="hero__fan-card hero__fan-card--3"></span>
+        <span class="hero__fan-card hero__fan-card--4"></span>
+        <span class="hero__fan-card hero__fan-card--5"></span>
+      </div>
+
+      <div class="wrap hero__inner">
+        <p class="hero__ribbon">
+          <span class="hero__ribbon-text">Google Business Profile · fixed-scope sprint</span>
         </p>
-        <p class="subhead">Fixed-price sprint. Async. No calls.</p>
+
+        <div class="hero__title-block">
+          <p class="hero__flip" aria-hidden="true">
+            <span class="hero__flip-word">Flip</span><span class="hero__flip-num">7</span>
+          </p>
+          <div class="hero__title-copy">
+            <h1 id="main">More calls from Google in 7 days — without ads</h1>
+            <p class="hero__lede">
+              GBP cleanup for <strong>local trades &amp; service businesses</strong> in
+              <strong>your city or region</strong>. Edit this line in <code>index.html</code> to name
+              your trade and area.
+            </p>
+            <p class="hero__sub">Fixed-price sprint. Async. No calls.</p>
+          </div>
+        </div>
       </div>
     </header>
 
-    <main>
+    <main class="main">
       <section class="section" aria-labelledby="icp-heading">
         <div class="wrap">
-          <h2 id="icp-heading">Who it’s for</h2>
-          <ul class="list">
-            <li>
+          <h2 class="section__title" id="icp-heading">
+            <span class="section__title-icon" aria-hidden="true">🎯</span>
+            Who it’s for
+          </h2>
+          <ul class="card-list">
+            <li class="card card--teal">
               Owners of a <strong>local trade or service business</strong> (about
               <strong>1–10 employees</strong>) already serving customers.
             </li>
-            <li>
+            <li class="card card--teal">
               You have a <strong>thin or incomplete Google Business Profile</strong>, or strong
               offline signals but a <strong>missing or messy GBP</strong> you want cleaned up
               carefully.
             </li>
-            <li>
+            <li class="card card--teal">
               You’re OK with <strong>email + forms only</strong> — no sales calls — and can respond
               on a predictable async cadence.
             </li>
@@ -48,17 +69,22 @@
         </div>
       </section>
 
-      <section class="section section--muted" aria-labelledby="dq-heading">
+      <section class="section section--cream" aria-labelledby="dq-heading">
         <div class="wrap">
-          <h2 id="dq-heading">Who it’s not for</h2>
-          <ul class="list list--warn">
-            <li>Anyone who needs a <strong>website rebuild</strong>, <strong>ads</strong>, or an
-              ongoing <strong>SEO content machine</strong>.</li>
-            <li>
+          <h2 class="section__title section__title--coral" id="dq-heading">
+            <span class="section__title-icon" aria-hidden="true">🚫</span>
+            Who it’s not for
+          </h2>
+          <ul class="card-list">
+            <li class="card card--coral">
+              Anyone who needs a <strong>website rebuild</strong>, <strong>ads</strong>, or an
+              ongoing <strong>SEO content machine</strong>.
+            </li>
+            <li class="card card--coral">
               Anyone expecting <strong>“#1 ranking” guarantees</strong>, duplicate-listing legal
               claims, or <strong>phone support</strong> as part of this sprint.
             </li>
-            <li>
+            <li class="card card--coral">
               Businesses outside your stated <strong>service geography</strong> or clearly outside
               the <strong>local trade / service</strong> scope.
             </li>
@@ -68,46 +94,74 @@
 
       <section class="section" aria-labelledby="deliver-heading">
         <div class="wrap">
-          <h2 id="deliver-heading">What you get</h2>
-          <p class="intro">
+          <h2 class="section__title" id="deliver-heading">
+            <span class="section__title-icon" aria-hidden="true">📋</span>
+            What you get
+          </h2>
+          <p class="section__intro">
             One <strong>Google Doc deliverable</strong> structured like our delivery template:
-            snapshot, issues, changes, Q&amp;A bank, posts, photo plan, and light next-steps
-            boundary.
+            snapshot, issues, changes, Q&amp;A bank, posts, photo plan, and light next-steps boundary.
           </p>
-          <ul class="list checklist">
-            <li>Categories &amp; services cleanup; description; attributes where applicable</li>
-            <li>Photo guidance checklist</li>
-            <li>Q&amp;A prompts (draft answers)</li>
-            <li><strong>5</strong> Google Business Profile post ideas (copy-paste ready)</li>
-            <li>Light competitor positioning notes</li>
-            <li>Before / after screenshots captured in the doc</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section section--accent" aria-labelledby="price-heading">
-        <div class="wrap">
-          <h2 id="price-heading">Price &amp; timeline</h2>
-          <p class="price">
-            <span class="price__amount">$197</span>
-            <span class="price__meta">paid upfront · delivered in <strong>7 business days</strong></span>
-          </p>
-          <ul class="list tight">
-            <li>
-              <strong>Start:</strong> within <strong>48 hours</strong> of paid intake (weekdays).
+          <ul class="checklist">
+            <li class="checklist__row">
+              <span class="checklist__pip" aria-hidden="true"></span>
+              <span>Categories &amp; services cleanup; description; attributes where applicable</span>
             </li>
-            <li>
-              <strong>Refund:</strong> full refund only if GBP manager access cannot be granted
-              within <strong>7 days</strong> of payment (see policy in repo docs).
+            <li class="checklist__row">
+              <span class="checklist__pip" aria-hidden="true"></span>
+              <span>Photo guidance checklist</span>
+            </li>
+            <li class="checklist__row">
+              <span class="checklist__pip" aria-hidden="true"></span>
+              <span>Q&amp;A prompts (draft answers)</span>
+            </li>
+            <li class="checklist__row">
+              <span class="checklist__pip" aria-hidden="true"></span>
+              <span><strong>5</strong> Google Business Profile post ideas (copy-paste ready)</span>
+            </li>
+            <li class="checklist__row">
+              <span class="checklist__pip" aria-hidden="true"></span>
+              <span>Light competitor positioning notes</span>
+            </li>
+            <li class="checklist__row">
+              <span class="checklist__pip" aria-hidden="true"></span>
+              <span>Before / after screenshots captured in the doc</span>
             </li>
           </ul>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="prequal-heading">
+      <section class="section section--price" aria-labelledby="price-heading">
         <div class="wrap">
-          <h2 id="prequal-heading">Pre-qualify (required before checkout)</h2>
-          <p class="intro">
+          <h2 class="section__title section__title--light" id="price-heading">
+            <span class="section__title-icon" aria-hidden="true">💰</span>
+            Price &amp; timeline
+          </h2>
+          <div class="price-card">
+            <p class="price-card__amount">
+              <span class="price-card__currency">$</span>197
+            </p>
+            <p class="price-card__meta">paid upfront · delivered in <strong>7 business days</strong></p>
+            <ul class="price-card__list">
+              <li>
+                <strong>Start:</strong> within <strong>48 hours</strong> of paid intake (weekdays).
+              </li>
+              <li>
+                <strong>Refund:</strong> full refund only if GBP manager access cannot be granted
+                within <strong>7 days</strong> of payment (see policy in repo docs).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cream" aria-labelledby="prequal-heading">
+        <div class="wrap">
+          <h2 class="section__title" id="prequal-heading">
+            <span class="section__title-icon" aria-hidden="true">✅</span>
+            Pre-qualify (required before checkout)
+          </h2>
+          <p class="section__intro">
             Confirm all three before continuing to payment. This is <strong>client-side only</strong>
             for your convenience; you’ll still complete intake after paying.
           </p>
@@ -146,7 +200,7 @@
           <div class="cta-row">
             <a
               id="pay-cta"
-              class="btn btn--primary is-disabled"
+              class="btn btn--gold is-disabled"
               href="https://buy.stripe.com/test_replace_me"
               rel="noopener noreferrer"
               target="_blank"
@@ -157,65 +211,78 @@
           </div>
           <p class="fineprint">
             After payment, Stripe should redirect buyers to your <strong>intake form</strong> (see
-            <code>docs/intake.md</code>). Replace the button URL with your live Stripe Payment Link
-            and set the redirect URL in Stripe to your form.
+            <code>docs/intake.md</code>). Replace the button URL with your live Stripe Payment Link and
+            set the redirect URL in Stripe to your form.
           </p>
         </div>
       </section>
 
-      <section class="section section--muted" aria-labelledby="faq-heading">
+      <section class="section" aria-labelledby="faq-heading">
         <div class="wrap">
-          <h2 id="faq-heading">FAQ</h2>
+          <h2 class="section__title" id="faq-heading">
+            <span class="section__title-icon" aria-hidden="true">❓</span>
+            FAQ
+          </h2>
           <dl class="faq">
-            <dt>Why pay before chat?</dt>
-            <dd>
-              It keeps the sprint fast. The price is lower because the scope is standardized and
-              delivery is async.
-            </dd>
-
-            <dt>Do I need a website?</dt>
-            <dd>
-              Helpful, not required. This offer is <strong>Google Business Profile</strong> scope
-              only.
-            </dd>
-
-            <dt>What if I’m too busy?</dt>
-            <dd>
-              Budget about <strong>20 minutes</strong> total: pay, complete intake, and approve
-              access.
-            </dd>
-
-            <dt>Isn’t $197 expensive?</dt>
-            <dd>
-              Compare it to <strong>one missed job</strong> from an incomplete profile. If it’s not
-              a fit, that’s OK — this isn’t for everyone.
-            </dd>
-
-            <dt>Can you guarantee rankings or call volume?</dt>
-            <dd>
-              No ethical vendor guarantees rankings. This sprint fixes the profile issues that
-              commonly get in the way of calls — without promising a position or volume.
-            </dd>
-
-            <dt>Can we jump on a call?</dt>
-            <dd>
-              This micro-offer stays <strong>async</strong> (email + doc delivery) to keep the
-              price where it is.
-            </dd>
+            <div class="faq__item">
+              <dt>Why pay before chat?</dt>
+              <dd>
+                It keeps the sprint fast. The price is lower because the scope is standardized and
+                delivery is async.
+              </dd>
+            </div>
+            <div class="faq__item">
+              <dt>Do I need a website?</dt>
+              <dd>
+                Helpful, not required. This offer is <strong>Google Business Profile</strong> scope
+                only.
+              </dd>
+            </div>
+            <div class="faq__item">
+              <dt>What if I’m too busy?</dt>
+              <dd>
+                Budget about <strong>20 minutes</strong> total: pay, complete intake, and approve
+                access.
+              </dd>
+            </div>
+            <div class="faq__item">
+              <dt>Isn’t $197 expensive?</dt>
+              <dd>
+                Compare it to <strong>one missed job</strong> from an incomplete profile. If it’s not
+                a fit, that’s OK — this isn’t for everyone.
+              </dd>
+            </div>
+            <div class="faq__item">
+              <dt>Can you guarantee rankings or call volume?</dt>
+              <dd>
+                No ethical vendor guarantees rankings. This sprint fixes the profile issues that
+                commonly get in the way of calls — without promising a position or volume.
+              </dd>
+            </div>
+            <div class="faq__item">
+              <dt>Can we jump on a call?</dt>
+              <dd>
+                This micro-offer stays <strong>async</strong> (email + doc delivery) to keep the price
+                where it is.
+              </dd>
+            </div>
           </dl>
         </div>
       </section>
 
-      <section class="section cta-footer" aria-labelledby="footer-cta-heading">
+      <section class="section section--footer-cta" aria-labelledby="footer-cta-heading">
         <div class="wrap wrap--narrow">
-          <h2 id="footer-cta-heading">Ready when you are</h2>
-          <p>
+          <h2 class="section__title section__title--center" id="footer-cta-heading">
+            <span class="section__title-icon" aria-hidden="true">🃏</span>
+            Ready when you are
+          </h2>
+          <p class="footer-cta__text">
             Check the boxes above, then use the same payment link:
             <a href="https://buy.stripe.com/test_replace_me">Stripe checkout (placeholder)</a>.
           </p>
-          <p class="fineprint">
-            We are <strong>not</strong> affiliated with Google. Google Business Profile is a
-            trademark of Google LLC.
+          <p class="fineprint fineprint--center">
+            We are <strong>not</strong> affiliated with Google. Google Business Profile is a trademark
+            of Google LLC.
           </p>
         </div>
       </section>
@@ -227,9 +294,6 @@
       </div>
     </footer>
 
-    <script>
-      document.getElementById("y").textContent = new Date().getFullYear();
-    </script>
     <script src="app.js" defer></script>
   </body>
 </html>
