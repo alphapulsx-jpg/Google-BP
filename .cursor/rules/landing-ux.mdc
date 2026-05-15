@@ -1,0 +1,56 @@
+---
+description: Conversion-focused landing page UX, copy limits, and visual QA for GBP sprint
+globs: index.html,styles.css,app.js
+alwaysApply: false
+---
+
+# Landing page UX (GBP sprint)
+
+## Conversion checklist
+
+Before shipping changes to `index.html`, `styles.css`, or `app.js`, confirm:
+
+1. **Hero** — Outcome headline (≤ 20 words), one-line proof, price anchor ($197 / 7 days), primary CTA above fold.
+2. **Trust** — Short strip: async delivery, fixed scope, refund rule (bullets ≤ 12 words each).
+3. **Fit** — Compact for / not-for blocks; no long paragraphs.
+4. **Deliverables** — Scannable numbered or icon list; lead with the Google Doc outcome.
+5. **Proof** — Example deliverable (anonymized doc preview) and optional intake mock; no fake testimonials.
+6. **Flow** — “What happens after you pay”: Pay → Intake → Doc in 7 days.
+7. **CTA** — Price + 3 pre-qual checkboxes gate Stripe; placeholder URL `https://buy.stripe.com/test_replace_me` until live.
+8. **Objections** — FAQ capped at 4 items; footer disclaimer one line.
+9. **Mobile** — Sticky bottom bar: price + gated CTA when pre-qual passes; safe-area padding.
+
+## Copy limits
+
+| Element | Limit |
+|---------|--------|
+| Hero headline | ≤ 20 words |
+| Trust / fit bullets | ≤ 12 words each |
+| Section intros | 1–2 sentences |
+| FAQ answers | 1 sentence preferred |
+
+Prefer verbs and outcomes over feature lists. No ranking or call-volume guarantees.
+
+## Visual system
+
+- **Font**: DM Sans (or equivalent); display scale for `h1`, muted body (`--ink-muted`).
+- **Accents**: Flip7 palette from `docs/flip7-card-game-DESIGN.md` — teal, coral, gold as borders/CTAs only; avoid playful/game UI.
+- **Surface**: Subtle mesh/gradient background, 12–16px radius, refined shadows, visible `:focus-visible` states.
+- **Motion**: Respect `prefers-reduced-motion`; no decorative loops on the landing page.
+
+## Reference URLs
+
+Add competitor/reference URLs when provided. Until then, pattern-match high-converting service landings (clear hero, single CTA rhythm, social proof strip, objection FAQ) — e.g. Stripe payment pages, Linear-style SaaS heroes — without copying brand assets.
+
+## Ship gate: screenshot review
+
+**Do not ship visual changes** without reviewing a local screenshot at mobile (~390px) and desktop widths:
+
+1. Run preview on port **5173** (`start5173.bat`) or **8080**.
+2. Capture hero, trust strip, checkout (disabled + enabled CTA), sticky bar, and doc preview open state.
+3. Fix contrast, alignment, and overflow before commit.
+
+## Do not break
+
+- Stripe placeholder link and 3 `name="prequal"` checkboxes.
+- `app.js` gate: both `#pay-cta` and `#pay-cta-sticky` stay disabled until all boxes checked.

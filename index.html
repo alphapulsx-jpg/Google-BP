@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -27,37 +27,53 @@
           Google Business Profile sprint
         </p>
         <h1 id="main">A tighter Google profile in 7 business days</h1>
-        <p class="hero__lede">
-          <strong>$197</strong>, paid upfront, async delivery — for <strong>local trades &amp; services</strong>
-          in <strong>your area</strong> (edit in HTML).
+        <p class="hero__proof">Async sprint for local trades — one doc, no calls.</p>
+        <p class="hero__price">
+          <span class="hero__price-amount">$197</span>
+          <span class="hero__price-sep">/</span>
+          <span class="hero__price-term">7 business days</span>
         </p>
-        <p class="hero__meta">No calls · email &amp; doc only</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#checkout">Start sprint — $197</a>
+        </div>
         <p class="hero__legal">
-          No ranking, visibility, or call-volume guarantees — Google Business Profile work only.
+          No ranking or call-volume guarantees — Google Business Profile work only.
         </p>
       </div>
     </header>
+
+    <div class="trust-strip" role="region" aria-label="Why this offer works">
+      <div class="wrap trust-strip__inner">
+        <ul class="trust-strip__list">
+          <li><span class="trust-strip__icon" aria-hidden="true">◆</span> Fully async — email &amp; doc</li>
+          <li><span class="trust-strip__icon" aria-hidden="true">◆</span> Fixed scope — GBP only</li>
+          <li><span class="trust-strip__icon" aria-hidden="true">◆</span> Refund if access blocked 7 days</li>
+        </ul>
+      </div>
+    </div>
 
     <main class="main">
       <section class="section" aria-labelledby="fit-heading">
         <div class="wrap">
           <h2 class="section__title" id="fit-heading">Fit</h2>
-
-          <h3 class="section__subhead">For you if</h3>
-          <ul class="list">
-            <li>Local trade or service, ~1–10 people, already booking work.</li>
-            <li>Thin or messy GBP — you want a careful pass, not a rebuild pitch.</li>
-            <li>Comfortable with async (forms + email) on a predictable cadence.</li>
-          </ul>
-
-          <hr class="divider" />
-
-          <h3 class="section__subhead">Not for</h3>
-          <ul class="list list--muted">
-            <li>Site redesigns, ads, or ongoing SEO content retainers.</li>
-            <li>“#1 ranking” expectations, duplicate listings, or phone support in-scope.</li>
-            <li>Outside your stated geography or non-local scope.</li>
-          </ul>
+          <div class="fit-grid">
+            <div class="fit-card fit-card--yes">
+              <h3 class="fit-card__label">For you</h3>
+              <ul class="list list--compact">
+                <li>Local trade, ~1–10 people, already booking.</li>
+                <li>Thin GBP — careful pass, not a rebuild pitch.</li>
+                <li>Comfortable with async forms + email.</li>
+              </ul>
+            </div>
+            <div class="fit-card fit-card--no">
+              <h3 class="fit-card__label">Not for</h3>
+              <ul class="list list--compact list--muted">
+                <li>Site redesigns, ads, or SEO retainers.</li>
+                <li>Ranking guarantees or phone support.</li>
+                <li>Outside your stated geography.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -65,88 +81,145 @@
         <div class="wrap">
           <h2 class="section__title" id="deliver-heading">What you get</h2>
           <p class="section__intro">
-            One <strong>Google Doc</strong>: snapshot, ranked issues, change list, Q&amp;A drafts, post lines, photo checklist, light next-step boundaries.
+            One <strong>Google Doc</strong>: snapshot, ranked issues, change list, Q&amp;A drafts, posts, photo checklist.
           </p>
-          <ul class="list list--check">
-            <li>Categories, services, description, attributes (where applicable)</li>
-            <li>Photo guidance checklist</li>
-            <li>Q&amp;A prompts with draft answers</li>
-            <li><strong>5</strong> GBP post ideas (copy-paste)</li>
-            <li>Light competitor positioning notes</li>
-            <li>Before / after screenshots in-doc</li>
-          </ul>
+          <ol class="deliver-list">
+            <li><span class="deliver-list__num">1</span> Categories, services, description, attributes</li>
+            <li><span class="deliver-list__num">2</span> Photo guidance checklist</li>
+            <li><span class="deliver-list__num">3</span> Q&amp;A prompts with draft answers</li>
+            <li><span class="deliver-list__num">4</span> <strong>5</strong> GBP post ideas (copy-paste)</li>
+            <li><span class="deliver-list__num">5</span> Light competitor positioning notes</li>
+            <li><span class="deliver-list__num">6</span> Before / after screenshots in-doc</li>
+          </ol>
         </div>
       </section>
 
       <section class="section" aria-labelledby="example-heading">
         <div class="wrap">
-          <h2 class="section__title" id="example-heading">Example deliverable (anonymized)</h2>
-          <p class="section__intro">
-            Illustrative output from a finished sprint — fictional business, realistic structure.
-          </p>
+          <h2 class="section__title" id="example-heading">Example deliverable</h2>
+          <p class="section__intro">Anonymized sprint output — fictional business, realistic structure.</p>
 
-          <details class="acc">
-            <summary class="acc__summary">Open sample sprint doc outline</summary>
-            <div class="acc__body">
-              <h3 class="acc__h">Before → after</h3>
-              <ul class="list list--tight">
-                <li><strong>Before:</strong> Primary category pointed at “Handyman”; top revenue is residential HVAC installs.</li>
-                <li><strong>Before:</strong> Business description empty; attributes missing license &amp; “women-led” (accurate but unused).</li>
-                <li><strong>After:</strong> Primary → HVAC contractor; description ~680 chars with service area + emergency line + licensing mention.</li>
-                <li><strong>After:</strong> Service list deduped; removed overlapping “duct cleaning” duplicates; hours fixed for Sunday emergency window.</li>
-              </ul>
+          <details class="doc-preview">
+            <summary class="doc-preview__summary">
+              <span class="doc-preview__title">Sample sprint doc outline</span>
+              <span class="doc-preview__badge">Preview</span>
+            </summary>
+            <div class="doc-preview__paper">
+              <div class="doc-preview__chrome">
+                <span class="doc-preview__dot"></span>
+                <span class="doc-preview__dot"></span>
+                <span class="doc-preview__dot"></span>
+                <span class="doc-preview__filename">GBP_Sprint_Sample.doc</span>
+              </div>
+              <div class="doc-preview__body">
+                <h3 class="doc-preview__h">Before → after</h3>
+                <ul class="list list--tight">
+                  <li><strong>Before:</strong> Category “Handyman”; revenue is HVAC installs.</li>
+                  <li><strong>After:</strong> Primary → HVAC contractor; description ~680 chars with licensing.</li>
+                </ul>
 
-              <h3 class="acc__h">Ranked issues</h3>
-              <ol class="list list--ordered">
-                <li><strong>Category mismatch</strong> — primary didn’t match money-driving services; risk of wrong discovery intent.</li>
-                <li><strong>Trust gaps</strong> — no license # in attributes where GBP supports it; photos mostly trucks, few in-home installs.</li>
-                <li><strong>Q&amp;A vacuum</strong> — no owner answers on high-intent “same-day / emergency” questions; competitors answered first.</li>
-              </ol>
+                <h3 class="doc-preview__h">Top issues (ranked)</h3>
+                <ol class="list list--ordered list--tight">
+                  <li><strong>Category mismatch</strong> — wrong discovery intent.</li>
+                  <li><strong>Trust gaps</strong> — license missing; few install photos.</li>
+                  <li><strong>Q&amp;A vacuum</strong> — competitors answered first.</li>
+                </ol>
 
-              <h3 class="acc__h">Sample Q&amp;As (draft)</h3>
-              <dl class="qa-mini">
-                <dt>Do you offer same-day AC repair?</dt>
-                <dd>
-                  Yes — for [Metro] residents we prioritize same-day when capacity allows. Call before noon for best availability; after-hours rates apply per policy page.
-                </dd>
-                <dt>Are you licensed and insured?</dt>
-                <dd>
-                  Licensed HVAC contractor [state license # on file with office]; general liability and workers’ comp on request for commercial bids.
-                </dd>
-              </dl>
-
-              <h3 class="acc__h">Sample Google post lines</h3>
-              <ul class="list list--tight">
-                <li>“Pre-season tune-ups booking now — $79 check includes filter inspection. Beat the July rush.”</li>
-                <li>“New installs: ask about 0% financing on qualifying systems. Free load calc with on-site estimate.”</li>
-              </ul>
+                <h3 class="doc-preview__h">Sample Q&amp;A draft</h3>
+                <dl class="qa-mini">
+                  <dt>Same-day AC repair?</dt>
+                  <dd>Yes — [Metro] same-day when capacity allows; after-hours rates apply.</dd>
+                  <dt>Licensed and insured?</dt>
+                  <dd>Licensed HVAC [state #]; liability on request for commercial bids.</dd>
+                </dl>
+              </div>
             </div>
           </details>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="price-heading">
+      <section class="section section--soft" aria-labelledby="flow-heading">
         <div class="wrap">
-          <h2 class="section__title" id="price-heading">Price &amp; timeline</h2>
-          <div class="price-line">
-            <p class="price-line__amount"><span class="price-line__currency">$</span>197</p>
-            <p class="price-line__meta">Pay upfront · delivered in <strong>7 business days</strong></p>
-          </div>
-          <ul class="list list--tight price-notes">
-            <li><strong>Start:</strong> within <strong>48 hours</strong> of paid intake (weekdays).</li>
-            <li>
-              <strong>Refund:</strong> full refund only if GBP manager access can’t be granted within
-              <strong>7 days</strong> of payment (see repo policy).
+          <h2 class="section__title" id="flow-heading">What happens after you pay</h2>
+          <ol class="flow-steps">
+            <li class="flow-step">
+              <span class="flow-step__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <path d="M2 10h20" />
+                </svg>
+              </span>
+              <span class="flow-step__label">Pay</span>
+              <span class="flow-step__desc">Stripe checkout — $197 upfront</span>
             </li>
-          </ul>
+            <li class="flow-step__arrow" aria-hidden="true">→</li>
+            <li class="flow-step">
+              <span class="flow-step__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                  <rect x="9" y="3" width="6" height="4" rx="1" />
+                </svg>
+              </span>
+              <span class="flow-step__label">Intake form</span>
+              <span class="flow-step__desc">~10 min — access + business context</span>
+            </li>
+            <li class="flow-step__arrow" aria-hidden="true">→</li>
+            <li class="flow-step">
+              <span class="flow-step__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+                </svg>
+              </span>
+              <span class="flow-step__label">Doc in 7 days</span>
+              <span class="flow-step__desc">Google Doc delivered by email</span>
+            </li>
+          </ol>
+
+          <div class="intake-preview" aria-labelledby="intake-preview-heading">
+            <h3 class="intake-preview__title" id="intake-preview-heading">Intake form preview</h3>
+            <p class="intake-preview__note">Representative fields — real form unlocks after payment.</p>
+            <div class="intake-preview__fields" aria-hidden="true">
+              <div class="intake-field">
+                <span class="intake-field__label">Business legal name</span>
+                <span class="intake-field__value intake-field__value--placeholder">Acme HVAC LLC</span>
+              </div>
+              <div class="intake-field">
+                <span class="intake-field__label">Primary service area</span>
+                <span class="intake-field__value intake-field__value--placeholder">Metro + 25 mi radius</span>
+              </div>
+              <div class="intake-field">
+                <span class="intake-field__label">GBP profile URL</span>
+                <span class="intake-field__value intake-field__value--placeholder">maps.google.com/…</span>
+              </div>
+              <div class="intake-field">
+                <span class="intake-field__label">Manager access email</span>
+                <span class="intake-field__value intake-field__value--placeholder">owner@example.com</span>
+              </div>
+              <div class="intake-field intake-field--area">
+                <span class="intake-field__label">Top 3 services you want found for</span>
+                <span class="intake-field__value intake-field__value--placeholder">Install, repair, maintenance…</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section section--soft" aria-labelledby="prequal-heading">
+      <section class="section" id="checkout" aria-labelledby="price-heading">
         <div class="wrap">
-          <h2 class="section__title" id="prequal-heading">Pre-qualify (required)</h2>
-          <p class="section__intro">
-            Check all three to unlock checkout. Client-side only — full intake <strong>after</strong> payment (Stripe redirect to your form; see <code>docs/intake.md</code>).
+          <h2 class="section__title" id="price-heading">Price &amp; checkout</h2>
+          <div class="price-card">
+            <p class="price-card__amount"><span class="price-card__currency">$</span>197</p>
+            <p class="price-card__meta">Pay upfront · delivered in <strong>7 business days</strong></p>
+            <ul class="price-card__notes">
+              <li>Start within <strong>48 hours</strong> of paid intake (weekdays).</li>
+              <li>Full refund if GBP access can’t be granted within <strong>7 days</strong>.</li>
+            </ul>
+          </div>
+
+          <h3 class="section__subhead" id="prequal-heading">Pre-qualify (required)</h3>
+          <p class="section__intro section__intro--tight">
+            Check all three to unlock checkout. Intake form comes <strong>after</strong> Stripe payment.
           </p>
 
           <form id="prequal-form" class="prequal" novalidate>
@@ -154,7 +227,7 @@
               <legend class="visually-hidden">Pre-qualification confirmations</legend>
               <label class="check">
                 <input type="checkbox" name="prequal" value="operating" />
-                <span>I run a <strong>local trade/service</strong> business in <strong>my stated region</strong>.</span>
+                <span>I run a <strong>local trade/service</strong> in <strong>my stated region</strong>.</span>
               </label>
               <label class="check">
                 <input type="checkbox" name="prequal" value="access" />
@@ -162,7 +235,7 @@
               </label>
               <label class="check">
                 <input type="checkbox" name="prequal" value="scope" />
-                <span>I understand: <strong>profile optimization</strong> — not rankings or call guarantees.</span>
+                <span>I understand: <strong>profile optimization</strong> — not ranking guarantees.</span>
               </label>
             </fieldset>
           </form>
@@ -172,7 +245,7 @@
           <div class="cta-row">
             <a
               id="pay-cta"
-              class="btn btn--primary is-disabled"
+              class="btn btn--primary btn--lg is-disabled"
               href="https://buy.stripe.com/test_replace_me"
               rel="noopener noreferrer"
               target="_blank"
@@ -182,18 +255,18 @@
             >
           </div>
           <p class="fineprint">
-            Replace the URL with your live Stripe Payment Link; set Stripe’s post-checkout redirect to your intake form.
+            Replace URL with live Stripe Payment Link; set post-checkout redirect to your intake form.
           </p>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="faq-heading">
+      <section class="section section--soft" aria-labelledby="faq-heading">
         <div class="wrap">
           <h2 class="section__title" id="faq-heading">FAQ</h2>
           <dl class="faq">
             <div class="faq__row">
               <dt>Why pay before chat?</dt>
-              <dd>Fixed scope + async delivery keeps the price low and the turnaround predictable.</dd>
+              <dd>Fixed scope + async keeps price low and turnaround predictable.</dd>
             </div>
             <div class="faq__row">
               <dt>Website required?</dt>
@@ -205,7 +278,7 @@
             </div>
             <div class="faq__row">
               <dt>Calls?</dt>
-              <dd>No — email + doc delivery only for this micro-offer.</dd>
+              <dd>No — email + doc delivery only for this offer.</dd>
             </div>
           </dl>
         </div>
@@ -215,11 +288,27 @@
     <footer class="site-footer">
       <div class="wrap">
         <p class="site-footer__legal">
-          Not affiliated with Google. Google Business Profile is a trademark of Google LLC.
+          Not affiliated with Google. Google Business Profile is a trademark of Google LLC. ©
+          <span id="y"></span> · async only
         </p>
-        <p>&copy; <span id="y"></span> GBP Revamp Sprint · async only</p>
       </div>
     </footer>
+
+    <aside class="sticky-bar" id="sticky-bar" aria-label="Quick checkout" hidden>
+      <div class="sticky-bar__inner">
+        <p class="sticky-bar__price"><span>$197</span> · 7 days</p>
+        <a
+          id="pay-cta-sticky"
+          class="btn btn--primary btn--sm is-disabled"
+          href="https://buy.stripe.com/test_replace_me"
+          rel="noopener noreferrer"
+          target="_blank"
+          aria-disabled="true"
+          tabindex="-1"
+          >Pay $197</a
+        >
+      </div>
+    </aside>
 
     <script src="app.js" defer></script>
   </body>
