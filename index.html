@@ -40,7 +40,12 @@
           <span class="hero__price-term">delivered in 48 hours</span>
         </p>
         <div class="hero__cta">
-          <a class="btn btn--primary" href="#checkout">Get my kit — $129.99</a>
+          <a
+            class="btn btn--primary"
+            href="#checkout"
+            aria-label="Get my kit — one-time fee $129.99"
+            >Get my kit — $129.99</a
+          >
         </div>
         <ul class="hero__trust" aria-label="Why this works">
           <li>Printable brochure + written report — clear checklist, ready-to-use wording, plain-English steps</li>
@@ -298,6 +303,7 @@
         <div class="wrap">
           <h2 class="section__title" id="price-heading">Checkout</h2>
           <div class="price-card">
+            <p class="price-card__fee">One-time fee — pay once, no subscription</p>
             <p class="price-card__amount"><span class="price-card__currency">$</span>129.99</p>
             <p class="price-card__meta">Brochure + report in <strong>48 hours</strong> after your short form</p>
             <ul class="price-card__notes">
@@ -344,6 +350,7 @@
               target="_blank"
               aria-disabled="true"
               tabindex="-1"
+              aria-label="Get my kit — one-time fee $129.99"
               >Get my kit — $129.99</a
             >
           </div>
@@ -395,9 +402,17 @@
       </div>
     </footer>
 
-    <aside class="sticky-bar" id="sticky-bar" aria-label="Quick checkout" hidden>
+    <aside
+      class="sticky-bar"
+      id="sticky-bar"
+      aria-label="Quick checkout: one-time fee $129.99, delivery in 48 hours"
+      hidden
+    >
       <div class="sticky-bar__inner">
-        <p class="sticky-bar__price"><span>$129.99</span> · 48 hours</p>
+        <div class="sticky-bar__text">
+          <p class="sticky-bar__price"><span>$129.99</span> · 48 hours</p>
+          <p class="sticky-bar__note">One-time fee</p>
+        </div>
         <a
           id="pay-cta-sticky"
           class="btn btn--primary btn--sm is-disabled"
@@ -406,6 +421,7 @@
           target="_blank"
           aria-disabled="true"
           tabindex="-1"
+          aria-label="Get my kit — one-time fee $129.99"
           >Get my kit — $129.99</a
         >
       </div>
