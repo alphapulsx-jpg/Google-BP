@@ -6,11 +6,11 @@ Use your GitHub Pages URL (adjust if your username or repo name differs):
 
 ## One-liner (X / Instagram bio–style)
 
-> $197 GBP sprint in 7 business days — async, no calls. Profile cleanup for local trades (not ranking hype).
+> $129.99 DIY Google listing kit in 7 business days — printable brochure + step-by-step report. No manager access; you apply changes. Not ranking hype.
 
 ## Short bio (copy-paste)
 
-I run a fixed-price **Google Business Profile** cleanup sprint for local service businesses: **$197**, **7 business days**, **async** (email + doc — no sales calls). If your Maps listing is thin or messy, this is the fast path — not ads, not “#1” promises.  
+I deliver a fixed-price **Google Business Profile** DIY kit for local service businesses: **$129.99**, **7 business days**, **async** (email + brochure + doc — no sales calls, **no** listing login). If your Maps listing is thin or messy, you get paste-ready steps — not ads, not “#1” promises.  
 **Site:** https://alphapulsx-jpg.github.io/Google-BP/
 
 ## Link in bio

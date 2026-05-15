@@ -1,24 +1,29 @@
-﻿# Client deliverable template — GBP Revamp ($197)
+﻿# Client deliverable template — GBP DIY kit ($129.99)
 
 **Client:** {{name}}  
 **Paid date:** {{date}}  
 **Delivery due:** {{due}}  
 
+## Package
+- **Printable brochure:** high-gloss layout (export **PDF** or provide print-ready file) mirroring the written guidance.
+- **Written report (Google Doc):** numbered steps; every section includes **copy-and-paste blocks** the owner can drop into Google Business Profile themselves.
+
 ## 1) Snapshot (before)
 - GBP link:
-- Screenshots: (attach)
+- Optional screenshots from client (attach)
+- Notes on anything you could not verify without access
 
 ## 2) Issues found (ranked)
 1. …
 2. …
 3. …
 
-## 3) Changes made (after)
-- Category / services / attributes / description / hours / links
-- Screenshots: (attach)
+## 3) Step-by-step: what to change (DIY)
+For each item: **Why it matters** → **Where to click** → **Paste this** (exact text).  
+They apply category, services, attributes, description, hours, links, products (if any) **themselves**.
 
 ## 4) Q&A bank (draft answers)
-- Q: … A: …
+- Q: … A: … (copy-paste)
 
 ## 5) 5 Google posts (copy-paste)
 - Post 1: …
@@ -27,12 +32,9 @@
 ## 6) Photo checklist (30/60 days)
 - …
 
-
-## 6) Photo checklist (30/60 days)
-- …
-
 ## 7) Next 30 days (optional upsell boundary)
 - Weekly posting habit, review requests, light website tweaks — **out of scope** unless contracted.
+
 ## Sign-off
 
-- Definition of done: all checklist items in `design.md` scope addressed or explicitly noted blocked by platform.
+- Definition of done: all checklist items in `design.md` scope are addressed in the doc/brochure with clear paste blocks, or explicitly noted as client-side / platform-limited.

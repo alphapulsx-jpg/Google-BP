@@ -4,18 +4,19 @@
 - Drive folder: `GBP-{{YYYY-MM-DD}}-{{BusinessSlug}}`
 
 ## States
-`Paid → Intake received → Access granted → In progress → Delivered → Closed`
+`Paid → Info received → Report delivered → Closed`
 
 ## Cadence
-- **Daily (10 min):** check payments + access invites
+- **Daily (10 min):** check payments + new intake rows
 - **Weekend (45–60 min):** complete deliveries + QA against template
 
-## If access blocked
-- Email script: request manager invite to **[email]** within 7 days or refund triggers.
+## If intake is incomplete
+- Email script: ask for listing link, or business name + city, or up to 3 screenshots to confirm the profile.
 
 ## If client scope creeps
-- Reply: "That's outside the $197 sprint; I can quote separately or you can handle with your web person."
+- Reply: "That's outside the $129.99 DIY kit; I can quote separately or you can handle with your web person."
 
 ## Quality bar (non-negotiable)
-- Before/after screenshots in doc
-- No unverifiable claims in their profile text
+- Brochure artifact + Google Doc with paste-ready blocks and numbered steps
+- No unverifiable claims in suggested profile text
+- Customer clearly understands **they** apply every change (no implied manager access)

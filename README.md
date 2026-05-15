@@ -1,6 +1,6 @@
 # Google-BP
 
-Google Business Page Business — repo specs live in `docs/`. This repository includes a **static landing page** at the root for the GBP Revamp micro-offer funnel.
+Google Business Page Business — repo specs live in `docs/`. This repository includes a **static landing page** at the root for the **$129.99** DIY Google Business Profile kit (printable brochure + written report; customer applies changes).
 
 ## GitHub Pages
 
@@ -21,7 +21,7 @@ The primary CTA in `index.html` uses a **placeholder** Stripe URL:
 
 `https://buy.stripe.com/test_replace_me`
 
-Replace that URL with your real **Stripe Payment Link** in `index.html` (search for `test_replace_me`). In the Stripe dashboard, set the payment link’s **after-payment redirect** to your intake form (see `docs/intake.md`).
+Replace that URL with your real **Stripe Payment Link** priced at **$129.99** in `index.html` (search for `test_replace_me`). In the Stripe dashboard, set the payment link’s **after-payment redirect** to your intake form (see `docs/intake.md`).
 
 ## Local preview
 
