@@ -1,22 +1,24 @@
 ---
-description: Conversion-focused landing page UX, copy limits, and visual QA for GBP sprint
+description: Conversion-focused landing page UX, copy limits, and visual QA for Google profile 7-day fix
 globs: index.html,styles.css,app.js
 alwaysApply: false
 ---
 
-# Landing page UX (GBP sprint)
+# Landing page UX (7-day Google profile fix)
+
+**Voice:** Plain English for local business owners; no dev jargon (no async, sprint, GBP, intake, deliverable, pre-qual).
 
 ## Conversion checklist
 
 Before shipping changes to `index.html`, `styles.css`, or `app.js`, confirm:
 
 1. **Hero** — Outcome headline (≤ 20 words), one-line proof, price anchor ($197 / 7 days), primary CTA above fold.
-2. **Trust** — Short strip: async delivery, fixed scope, refund rule (bullets ≤ 12 words each).
+2. **Trust** — Short strip: email-only delivery, Google listing scope, refund rule (bullets ≤ 12 words each).
 3. **Fit** — Compact for / not-for blocks; no long paragraphs.
 4. **Deliverables** — Scannable numbered or icon list; lead with the Google Doc outcome.
-5. **Proof** — Example deliverable (anonymized doc preview) and optional intake mock; no fake testimonials.
-6. **Flow** — “What happens after you pay”: Pay → Intake → Doc in 7 days.
-7. **CTA** — Price + 3 pre-qual checkboxes gate Stripe; placeholder URL `https://buy.stripe.com/test_replace_me` until live.
+5. **Proof** — Sample report with before/after (fictional business); optional form preview; no fake testimonials.
+6. **Flow** — “After you pay”: Pay → Short form → Report in 7 days.
+7. **CTA** — Price + 3 confirm checkboxes gate Stripe; placeholder URL `https://buy.stripe.com/test_replace_me` until live.
 8. **Objections** — FAQ capped at 4 items; footer disclaimer one line.
 9. **Mobile** — Sticky bottom bar: price + gated CTA when pre-qual passes; safe-area padding.
 
