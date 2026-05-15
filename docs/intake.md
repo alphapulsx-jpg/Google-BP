@@ -28,5 +28,5 @@
 - Cannot identify the correct listing after reasonable effort + optional screenshots → refund or manual follow-up per your policy.
 
 ## Auto-response email (short)
-- Thanks + **what happens next** + **expected delivery date** (~7 business days) + reminder that they will **apply all changes** using the kit + link to upload optional photos/screenshots.
-- No manager login required.
+- Thanks + **what happens next** + **delivery in 48 hours** (after this form) + reminder that they will **apply all changes** using the kit on their schedule + link to upload optional photos/screenshots.
+- Remind them the form should take **~5 minutes**; no manager login required.

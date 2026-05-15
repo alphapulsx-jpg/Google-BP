@@ -8,7 +8,7 @@
 ## Templates (short)
 
 ### A — first touch
-Hi {{name}} — I help **[trade]** shops in **[city]** tighten their **Google Business Profile** with a **$129.99 DIY kit** in **7 business days** (printable brochure + step-by-step report — you apply the updates).
+Hi {{name}} — I help **[trade]** shops in **[city]** tighten their **Google Business Profile** with a **$129.99 DIY kit** in **48 hours** (printable brochure + step-by-step report — you apply the updates; about 5 minutes from you after pay for the short form).
 If you want, I can send **3 issues I already see** on yours.  
 If not, no worries.
 

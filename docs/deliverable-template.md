@@ -2,7 +2,7 @@
 
 **Client:** {{name}}  
 **Paid date:** {{date}}  
-**Delivery due:** {{due}}  
+**Delivery due:** {{due}} *(target: 48 hours after completed intake form)*  
 
 ## Package
 - **Printable brochure:** high-gloss layout (export **PDF** or provide print-ready file) mirroring the written guidance.

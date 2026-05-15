@@ -1,10 +1,10 @@
 ---
-description: Conversion-focused landing page UX, copy limits, and visual QA for Google profile 7-day DIY kit ($129.99)
+description: Conversion-focused landing page UX, copy limits, and visual QA for Google profile DIY kit (48h delivery)
 globs: index.html,styles.css,app.js
 alwaysApply: false
 ---
 
-# Landing page UX (7-day Google profile DIY kit)
+# Landing page UX (48-hour Google profile DIY kit)
 
 **Voice:** Plain English for local business owners; no dev jargon (no async, sprint, GBP, intake, deliverable, pre-qual).
 
@@ -12,14 +12,14 @@ alwaysApply: false
 
 Before shipping changes to `index.html`, `styles.css`, or `app.js`, confirm:
 
-1. **Hero** — Outcome headline (≤ 20 words), one-line proof, price anchor ($129.99 DIY kit / 7 days), primary CTA above fold.
+1. **Hero** — Outcome headline (≤ 20 words), one-line proof, price anchor ($129.99 / **48 hours**), **~5 min** customer time after pay, primary CTA above fold.
 2. **Trust** — Short strip: email-only delivery, DIY (no manager access), refund rule (bullets ≤ 12 words each).
 3. **Fit** — Compact for / not-for blocks; no long paragraphs.
-4. **Deliverables** — Scannable numbered or icon list; lead with brochure + Google Doc outcome (customer applies changes).
+4. **Deliverables** — Scannable numbered or icon list; lead with brochure + report outcome (customer applies changes).
 5. **Proof** — Sample report with before/after (fictional business); optional form preview; no fake testimonials.
-6. **Flow** — “After you pay”: Pay → Short form → Brochure + report in 7 days.
+6. **Flow** — “After you pay”: Pay → Short form (~5 min) → Brochure + report in **48 hours**.
 7. **CTA** — $129.99 + 3 confirm checkboxes gate Stripe; placeholder URL `https://buy.stripe.com/test_replace_me` until live.
-8. **Objections** — FAQ capped at 4 items; footer disclaimer one line.
+8. **Objections** — FAQ capped at **5** items (include “Why so fast?”); footer disclaimer one line.
 9. **Mobile** — Sticky bottom bar: price + gated CTA when pre-qual passes; safe-area padding.
 
 ## Copy limits
