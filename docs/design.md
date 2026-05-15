@@ -7,7 +7,7 @@
 
 ## Offer (fixed scope)
 - **Name:** $197 Google Business Profile (GBP) Revamp — **7 business days**
-- **ICP:** **[Trade]** owners in **[City/region]**, **1–10 employees**, already serving customers, **weak GBP** (thin profile) OR strong offline signals but **missing/duplicated GBP** (handled cautiously in scoring).
+- **ICP:** **[Trade]** owners in **[City/region]**, **small to medium businesses under 100 employees**, already serving customers, **weak GBP** (thin profile) OR strong offline signals but **missing/duplicated GBP** (handled cautiously in scoring).
 - **Included:** categories/services cleanup, description, attributes where applicable, photo guidance checklist, Q&A prompts, 5 post ideas, competitor positioning notes (light), before/after screenshots, **1 Google Doc deliverable** from template.
 - **Excluded:** website rebuild, ads, SEO content machine, “#1 ranking” guarantees, duplicate suppression legal claims, phone support.
 
