@@ -1,0 +1,24 @@
+# Google listing kit (Google-BP)
+
+## Site purpose
+DIY Google Business Profile listing kit for local service businesses: prioritized fixes, paste-ready copy, and plain-English steps. Customers apply updates themselves from their own Google account.
+
+## Primary URL (canonical)
+https://alphapulsx-jpg.github.io/Google-BP/
+
+## Offer
+- Price: USD $129.99 one-time
+- Delivery: approximately 48 hours after completed intake form (short form ~5 minutes after payment)
+
+## What is included
+- Printable brochure (PDF)
+- Written report with checklist and guidance
+- Copy-paste steps so the buyer applies listing updates on their schedule
+
+## Checkout / contact
+See landing page for Stripe checkout.
+
+## Policy
+- No ranking, traffic, or revenue guarantees.
+- DIY guidance only; not legal or financial advice.
+- Not affiliated with Google. Google Business Profile is a trademark of Google LLC.

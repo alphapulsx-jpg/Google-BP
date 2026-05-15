@@ -1,0 +1,7 @@
+# This is a small marketing site. AI crawlers may index public pages.
+# We do not claim any partnership with or endorsement by Google.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://alphapulsx-jpg.github.io/Google-BP/sitemap.xml

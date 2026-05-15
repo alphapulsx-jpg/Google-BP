@@ -15,6 +15,16 @@ Enable GitHub Pages for this site:
 
 The repo includes an empty **`.nojekyll`** file at the root so GitHub Pages serves static assets predictably (no Jekyll processing).
 
+## SEO / AI crawlers
+
+For search engines, chatbots, and **llms.txt** consumers, the repo root includes:
+
+- **`robots.txt`** — allows all crawlers and points to the sitemap.
+- **`sitemap.xml`** — homepage URL with lastmod for indexing.
+- **`llms.txt`** — short, plain-text summary of the offer, policy, and canonical URL.
+
+Structured data (JSON-LD), canonical URL, and Open Graph / Twitter tags live in **`index.html`**. Keep **GitHub Pages** set to deploy **from the `main` branch** and folder **`/ (root)`** so these files are served at the site root (same folder as `index.html`).
+
 ## Stripe Payment Link (required before go-live)
 
 The primary CTA in `index.html` uses a **placeholder** Stripe URL:
