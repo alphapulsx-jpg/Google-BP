@@ -64,6 +64,13 @@
   form.addEventListener("change", update);
   update();
 
+  var printBtn = document.getElementById("print-brochure-btn");
+  if (printBtn) {
+    printBtn.addEventListener("click", function () {
+      window.print();
+    });
+  }
+
   if (stickyBar && checkout && window.matchMedia("(max-width: 767px)").matches) {
     document.body.classList.add("has-sticky");
     stickyBar.hidden = false;

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -92,73 +92,164 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="example-heading">
+      <section class="section section--brochure" aria-labelledby="example-heading">
         <div class="wrap">
           <h2 class="section__title" id="example-heading">Sample report</h2>
-          <p class="section__intro">Fictional business — shows what your report looks like.</p>
+          <p class="section__intro">
+            Branded preview — fictional client only. Your full report ships as a Google Doc in 7 days.
+          </p>
 
-          <details class="doc-preview">
-            <summary class="doc-preview__summary">
-              <span class="doc-preview__title">Summit Ridge Heating &amp; Cooling</span>
-              <span class="doc-preview__badge">Sample</span>
-            </summary>
-            <div class="doc-preview__paper">
-              <div class="doc-preview__chrome">
-                <span class="doc-preview__dot"></span>
-                <span class="doc-preview__dot"></span>
-                <span class="doc-preview__dot"></span>
-                <span class="doc-preview__filename">Summit_Ridge_Google_Report.doc</span>
+          <article class="brochure-preview" aria-label="Sample branded report excerpt for Summit Ridge Heating and Cooling">
+            <header class="brochure-cover">
+              <div class="brochure-cover__band">
+                <div class="brochure-cover__logo" aria-hidden="true">
+                  <svg class="brochure-cover__mark" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+                    <rect width="44" height="44" rx="9" fill="rgba(232,184,74,0.18)" stroke="rgba(232,184,74,0.45)" stroke-width="1" />
+                    <path d="M22 9c-4.5 6.5-9 10.5-9 14.5a9 9 0 1018 0c0-4-4.5-8-9-14.5z" fill="#e8b84a" />
+                    <text x="22" y="38" text-anchor="middle" fill="#f4f0e6" font-size="10" font-weight="700" font-family="system-ui,sans-serif">SR</text>
+                  </svg>
+                </div>
+                <p class="brochure-cover__client">Summit Ridge Heating &amp; Cooling</p>
+                <p class="brochure-cover__location">Littleton, CO · sample only</p>
+                <div class="brochure-cover__rule" aria-hidden="true"></div>
+                <p class="brochure-cover__tagline">Google Listing Makeover — Sample Excerpt</p>
+                <p class="brochure-cover__date">Prepared March 2026 · Flip7</p>
               </div>
-              <div class="doc-preview__body">
-                <p class="doc-preview__biz">
-                  <strong>Summit Ridge Heating &amp; Cooling</strong> · Littleton, CO · sample data
-                </p>
+            </header>
 
-                <div class="compare-grid">
-                  <div class="compare-col compare-col--before">
-                    <h3 class="compare-col__label">Before</h3>
-                    <p class="profile-line"><span class="profile-k">Name</span> Summit Ridge HVAC</p>
-                    <p class="profile-line"><span class="profile-k">Category</span> General contractor</p>
-                    <p class="profile-line profile-line--block">
-                      <span class="profile-k">About</span> We do heating and cooling. Call for a quote.
-                    </p>
-                    <p class="profile-line"><span class="profile-k">Services</span> Repair, Install, Maintenance (3)</p>
-                    <p class="profile-line"><span class="profile-k">Photos</span> 4 · logo-heavy</p>
-                    <p class="profile-line"><span class="profile-k">Hours</span> Mon–Fri 9–5 only</p>
-                    <p class="profile-line"><span class="profile-k">Q&amp;A</span> None answered</p>
+            <div class="brochure-preview__body">
+              <ul class="brochure-metrics" aria-label="Before and after profile stats">
+                <li class="brochure-metric">
+                  <span class="brochure-metric__label">Services</span>
+                  <span class="brochure-metric__vals"><span class="brochure-metric__before">3</span> → <span class="brochure-metric__after">8</span></span>
+                </li>
+                <li class="brochure-metric">
+                  <span class="brochure-metric__label">Photos</span>
+                  <span class="brochure-metric__vals"><span class="brochure-metric__before">4</span> → <span class="brochure-metric__after">22</span></span>
+                </li>
+                <li class="brochure-metric">
+                  <span class="brochure-metric__label">Profile</span>
+                  <span class="brochure-metric__vals"><span class="brochure-metric__before">41%</span> → <span class="brochure-metric__after">94%</span></span>
+                </li>
+                <li class="brochure-metric">
+                  <span class="brochure-metric__label">Q&amp;A</span>
+                  <span class="brochure-metric__vals"><span class="brochure-metric__before">0</span> → <span class="brochure-metric__after">6</span></span>
+                </li>
+              </ul>
+
+              <div class="listing-compare" aria-label="How the business appears on Google before and after">
+                <p class="listing-compare__heading">How customers see you on Google</p>
+                <div class="listing-compare__pair">
+                  <div class="listing-card listing-card--before">
+                    <span class="listing-card__tag">Before</span>
+                    <div class="listing-card__pin" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="listing-card__body">
+                      <p class="listing-card__name">Summit Ridge HVAC</p>
+                      <p class="listing-card__cat">General contractor</p>
+                      <p class="listing-card__desc">We do heating and cooling. Call for a quote.</p>
+                    </div>
                   </div>
-                  <div class="compare-col compare-col--after">
-                    <h3 class="compare-col__label">After</h3>
-                    <p class="profile-line"><span class="profile-k">Name</span> Summit Ridge Heating &amp; Cooling</p>
-                    <p class="profile-line"><span class="profile-k">Category</span> HVAC contractor</p>
-                    <p class="profile-line profile-line--block">
-                      <span class="profile-k">About</span> Licensed furnace &amp; AC in Littleton &amp; south Denver suburbs.
-                      Same-day emergency, free replacement estimates, 15+ years local.
-                    </p>
-                    <p class="profile-line">
-                      <span class="profile-k">Services</span> Furnace &amp; AC repair, heat pump, mini-split, tune-ups, air
-                      quality, thermostat, 24/7 emergency (8)
-                    </p>
-                    <p class="profile-line"><span class="profile-k">Photos</span> 22 · trucks, crew, installs</p>
-                    <p class="profile-line"><span class="profile-k">Hours</span> 24/7 emergency + weekday office</p>
-                    <p class="profile-line"><span class="profile-k">Q&amp;A</span> 6 answered (licensed, same-day, brands)</p>
+                  <span class="listing-compare__divider" aria-hidden="true">→</span>
+                  <div class="listing-card listing-card--after">
+                    <span class="listing-card__tag">After</span>
+                    <div class="listing-card__pin" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="listing-card__body">
+                      <p class="listing-card__name">Summit Ridge Heating &amp; Cooling</p>
+                      <p class="listing-card__cat">HVAC contractor</p>
+                      <p class="listing-card__desc">
+                        Licensed furnace &amp; AC in Littleton &amp; south Denver suburbs. Same-day emergency.
+                      </p>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                <h3 class="doc-preview__h">Sample Google post (after)</h3>
-                <blockquote class="post-sample">
-                  Furnace out in Littleton? Same-day heating repair — (303) 555-0142. Licensed &amp; insured.
-                </blockquote>
+              <div class="sample-fixes">
+                <h3 class="sample-fixes__title">3 fixes we made</h3>
+                <ul class="fix-chips">
+                  <li class="fix-chip">Wrong category — showed as “contractor,” not HVAC</li>
+                  <li class="fix-chip">Thin services — missing heat pump &amp; emergency</li>
+                  <li class="fix-chip">Empty Q&amp;A — competitors answered first</li>
+                </ul>
+              </div>
 
-                <h3 class="doc-preview__h">3 issues we fixed</h3>
-                <ol class="list list--ordered list--tight">
-                  <li><strong>Wrong category</strong> — you showed up for “contractor,” not “furnace repair near me.”</li>
-                  <li><strong>Thin services</strong> — missing heat pump, emergency, and suburb keywords.</li>
-                  <li><strong>Empty Q&amp;A</strong> — competitors answered “same-day?” and “licensed?” first.</li>
-                </ol>
+              <p class="sample-preview__teaser">
+                Full report includes: photo shot list, 5 ready-to-post updates, Q&amp;A answers, competitor notes,
+                step-by-step checklist
+              </p>
+            </div>
+
+            <footer class="sample-preview__fade">
+              <span class="sample-preview__page">Page 1 of 8</span>
+            </footer>
+          </article>
+
+            <div class="brochure-photo-strip brochure-print-section" aria-label="Sample photo upgrades">
+              <p class="brochure-photo-strip__label">Photo upgrades (sample)</p>
+              <ul class="brochure-photo-strip__row">
+                <li><span>Service truck</span></li>
+                <li><span>Crew on site</span></li>
+                <li><span>New install</span></li>
+                <li><span>Office / shop</span></li>
+              </ul>
+            </div>
+
+            <div class="tear-cards brochure-print-section" aria-label="Tear-off cards">
+              <p class="tear-cards__hint"><span class="tear-cards__scissors" aria-hidden="true">✂</span> Tear along dashed lines</p>
+              <div class="tear-cards__row">
+                <article class="tear-card">
+                  <div class="tear-card__perf" aria-hidden="true"><span class="tear-here">tear here</span></div>
+                  <div class="tear-card__body">
+                    <p class="tear-card__brand">Flip7</p>
+                    <h4 class="tear-card__title">Your Google listing — before we start</h4>
+                    <div class="tear-card__qr" aria-label="QR code placeholder"></div>
+                    <p class="tear-card__label">Your Maps link:</p>
+                    <p class="tear-card__line" aria-hidden="true"></p>
+                  </div>
+                </article>
+                <article class="tear-card">
+                  <div class="tear-card__perf" aria-hidden="true"><span class="tear-here">tear here</span></div>
+                  <div class="tear-card__body">
+                    <p class="tear-card__brand">Flip7</p>
+                    <h4 class="tear-card__title">Book your 7-day listing fix — $197</h4>
+                    <p class="tear-card__label">Pay link:</p>
+                    <p class="tear-card__line tear-card__line--url" aria-hidden="true"></p>
+                    <p class="tear-card__label">Phone / email:</p>
+                    <p class="tear-card__line" aria-hidden="true"></p>
+                  </div>
+                </article>
+                <article class="tear-card">
+                  <div class="tear-card__perf" aria-hidden="true"><span class="tear-here">tear here</span></motion>
+                  <div class="tear-card__body">
+                    <p class="tear-card__brand">Flip7</p>
+                    <h4 class="tear-card__title">Refer a business — $40 thank-you</h4>
+                    <p class="tear-card__fine">Tell them about the $197 listing fix. Write their business name below.</p>
+                    <p class="tear-card__label">Referred business:</p>
+                    <p class="tear-card__line" aria-hidden="true"></p>
+                  </div>
+                </article>
               </div>
             </div>
-          </details>
+          </div>
+
+          <div class="print-leaflet screen-only">
+            <h3 class="print-leaflet__title">Print this leaflet</h3>
+            <p class="print-leaflet__intro">Hand out at jobs or leave after a quote — includes sample results and tear-off cards.</p>
+            <button type="button" class="btn btn--primary" id="print-brochure-btn">Print sample leaflet</button>
+            <p class="print-leaflet__note">Tip: use <strong>Print → Save as PDF</strong> for email leave-behinds.</p>
+          </div>
         </div>
       </section>
 
