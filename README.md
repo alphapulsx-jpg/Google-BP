@@ -33,6 +33,14 @@ The primary CTA in `index.html` uses a **placeholder** Stripe URL:
 
 Replace that URL with your real **Stripe Payment Link** priced at **$129.99** in `index.html` (search for `test_replace_me`). Set the link’s **after-payment redirect** to the same site’s intake section (anchor `#intake`), and wire **Google Forms** + **Gmail** notifications — see **`docs/free-launch-checklist.md`** (also `docs/intake.md` for product copy).
 
+## Full automation (Google only)
+
+GitHub Pages **cannot** verify Stripe webhooks or send mail. For a **100% automated** payment path with an **owner approval gate** before the customer is emailed, use **Google Apps Script** (Web App) + **Sheets** + **Docs** + **Gmail** — see:
+
+- **[`docs/automation-full-stack.md`](docs/automation-full-stack.md)** — architecture (Flows A/B), security, limitations, customer UX (redirect + Form prefill).
+- **[`docs/owner-checklist.md`](docs/owner-checklist.md)** — numbered setup (Stripe webhook, Web App deploy, Sheet columns, template Doc, triggers).
+- **[`automation/Code.gs`](automation/Code.gs)** — stub to copy into the Apps Script editor (`doPost`, `createKitDoc`, `sendAfterApproval`); secrets only in **Script Properties**, never in git.
+
 ## Local preview
 
 Open `index.html` in a browser, or from the repo root:
