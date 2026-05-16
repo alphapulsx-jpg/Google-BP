@@ -23,18 +23,29 @@ The Script’s `doPost` handler:
 1. Reads the **raw body** and the **`Stripe-Signature`** header.
 2. **Verifies the webhook signature** using your **signing secret** (whsec_…) so only Stripe can trigger your logic. Store that secret in **Script Properties**, never in this git repo.
 3. Parses the JSON and checks **`type`** (e.g. `checkout.session.completed`).
-4. Extracts **`session.id`**, **customer email** (from `customer_details.email` or `customer_email` depending on API version), and **paid** time.
+4. Extracts **`session.id`**, **`customer_email`** (authoritative — from `customer_details.email` or `customer_email` only; **never** from the Form), and **paid** time.
 5. **Appends one row** to a **Google Sheet** (your “order log”), for example:
 
-   | session_id | customer_email | paid_at | status | doc_url | approved | sent | notes |
-   |------------|----------------|---------|--------|---------|----------|------|-------|
-   | cs_… | buyer@… | ISO timestamp | `AWAITING_REVIEW` or `NEEDS_GENERATION` | (filled after Doc exists) | FALSE | FALSE | |
+   | session_id | customer_email | listing_identifier | status | doc_url | approved | sent | notes |
+   |------------|----------------|--------------------|--------|---------|----------|------|-------|
+   | cs_… | buyer@… | *(empty until Form/Checkout)* | `AWAITING_INTAKE` or `NEEDS_GENERATION` | (after Doc) | FALSE | FALSE | |
+
+   **`customer_email`** is set **only** on `checkout.session.completed`. The Form must **not** collect email.
 
    **`status`** meaning (you can rename columns to taste):
 
-   - **`NEEDS_GENERATION`**: row exists; Doc not created yet (or failed — use **notes**).
+   - **`AWAITING_INTAKE`**: paid; **`listing_identifier`** not merged yet.
+   - **`NEEDS_GENERATION`**: row has **`listing_identifier`**; Doc not created (or failed — use **notes**).
    - **`AWAITING_REVIEW`**: Doc created; owner has not approved customer send.
-   - After customer email goes out, you can set **`status`** to **`SENT`** and **`sent`** to **TRUE**.
+   - After customer email goes out, set **`status`** to **`SENT`** and **`sent`** to **TRUE**.
+
+### Where `listing_identifier` comes from (pick one primary path)
+
+1. **Preferred (MVP):** Stripe webhook creates the row with **`session_id`** + **`customer_email`**; customer submits the **1-question Form** with **`listing_identifier`** + prefilled **`session_id`**; Apps Script (or manual Sheet edit) **merges** Form response into the same row when **`session_id`** matches.
+2. **Later:** Stripe Checkout **custom field** or **metadata** on Payment Link — webhook sets **`listing_identifier`** without Form (still keep Form as backup).
+3. **Optional:** Second webhook / Form trigger (`onFormSubmit`) calls **`mergeFormResponseBySessionId_`** — see **`automation/Code.gs`** stubs.
+
+**AI:** All customer-facing copy in the kit is generated from the listing snapshot + **`listing_identifier`** — the customer never writes prose in intake.
 
 ### Step 3 — Create the Google Doc from a template
 
@@ -128,17 +139,19 @@ Zapier is a valid alternative if you prefer no code.
 
 ---
 
-## Customer UX: redirect + embedded Form + session prefill
+## Customer UX: redirect + one field + Form prefill
 
-1. **Stripe Payment Link:** Set **success URL** to your site with Stripe’s placeholder **`{CHECKOUT_SESSION_ID}`**, e.g.  
-   `https://alphapulsx-jpg.github.io/Google-BP/#intake?session_id={CHECKOUT_SESSION_ID}`  
-   (Exact query parameter name is your choice; Stripe replaces the placeholder after checkout.)
+1. **Stripe Payment Link — success URL:**  
+   `https://alphapulsx-jpg.github.io/Google-BP/?session_id={CHECKOUT_SESSION_ID}#intake`  
+   Stripe replaces `{CHECKOUT_SESSION_ID}` after checkout. The hash **`#intake`** scrolls to the capture block (`app.js`).
 
-2. **Landing page (`index.html`):** The **`#intake`** section embeds the Google Form in an **iframe**. Optionally use a tiny script (if you add one) to read **`session_id`** from the URL and **not** trust it for “paid” — only for **prefilling** the Form so rows line up with webhook data.
+2. **Landing page (`index.html`):** **`#intake`** has one on-page **`<input id="listing-id">`** + **Submit**. No long Form iframe. **`app.js`** opens a prefilled 1-question Google Form in a new tab:  
+   `https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?entry.YOUR_ENTRY_ID=` + value  
+   (+ optional `entry.YOUR_SESSION_ENTRY_ID=` from `?session_id=` in the URL). Replace placeholders in **`app.js`**.
 
-3. **Google Forms prefill:** Use a **prefilled link** pattern with **`entry.XXXXXXXX=VALUE`** for a **short answer** or **hidden** field where **`XXXXXXXX`** is the field’s entry id (inspect the Form’s prefill link from **Get pre-filled link** in Google Forms). The **owner must map** each `entry.…` id once.
+3. **Trust model:** **`session_id` in the URL does not prove payment** (bookmarkable). **Proof of payment** = Stripe webhook row. **`session_id`** is only for **matching** Form submit → Sheet row.
 
-4. **Webhook + Form:** The webhook remains authoritative for **email** and **payment**; the Form collects **business details**. Matching **`session_id`** in the Sheet (webhook row vs form row) can be done by merging on **`session_id`** in Script or by vlookup-style formulas — document your chosen merge in the Sheet.
+4. **Webhook + Form merge:** Webhook row has **`customer_email`** + **`session_id`**. Form submit adds **`listing_identifier`** (and repeats **`session_id`**). **`mergeFormResponseBySessionId_`** in Apps Script updates the existing row — do not create duplicate rows per Form response unless you intend a separate responses tab.
 
 ---
 

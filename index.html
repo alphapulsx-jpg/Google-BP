@@ -78,7 +78,7 @@
                 "name": "Your time?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "~5 minutes after pay for the short, easy form; then copy-and-paste steps whenever your kit arrives."
+                  "text": "~10 seconds after pay to paste your listing link or business name + city; then copy-and-paste steps whenever your kit arrives."
                 }
               },
               {
@@ -349,8 +349,8 @@
                   <rect x="9" y="3" width="6" height="4" rx="1" />
                 </svg>
               </span>
-              <span class="flow-step__label">Short form</span>
-              <span class="flow-step__desc">Easy ~5 minutes after payment</span>
+              <span class="flow-step__label">Paste listing</span>
+              <span class="flow-step__desc">One field · ~10 seconds</span>
             </li>
             <li class="flow-step__arrow" aria-hidden="true">→</li>
             <li class="flow-step">
@@ -366,24 +366,12 @@
           </ol>
 
           <div class="intake-preview" aria-labelledby="form-preview-heading">
-            <h3 class="intake-preview__title" id="form-preview-heading">Form preview</h3>
-            <p class="intake-preview__note">Unlocks after payment — quick and simple, ~5 minutes.</p>
+            <h3 class="intake-preview__title" id="form-preview-heading">After you pay</h3>
+            <p class="intake-preview__note">One field — your Maps link or business name + city (~10 seconds).</p>
             <div class="intake-preview__fields" aria-hidden="true">
               <div class="intake-field">
-                <span class="intake-field__label">Business name</span>
-                <span class="intake-field__value intake-field__value--placeholder">Summit Ridge Heating LLC</span>
-              </div>
-              <div class="intake-field">
-                <span class="intake-field__label">Service area</span>
-                <span class="intake-field__value intake-field__value--placeholder">Littleton + 25 miles</span>
-              </div>
-              <div class="intake-field">
-                <span class="intake-field__label">Google profile link</span>
-                <span class="intake-field__value intake-field__value--placeholder">maps.google.com/…</span>
-              </div>
-              <div class="intake-field intake-field--area">
-                <span class="intake-field__label">Top services (phrases customers use)</span>
-                <span class="intake-field__value intake-field__value--placeholder">Furnace repair, AC install…</span>
+                <span class="intake-field__label">Listing link or name + city</span>
+                <span class="intake-field__value intake-field__value--placeholder">maps.google.com/… or Summit Ridge Heating, Littleton</span>
               </div>
             </div>
           </div>
@@ -396,9 +384,9 @@
           <div class="price-card">
             <p class="price-card__fee">One-time fee — pay once, no subscription</p>
             <p class="price-card__amount"><span class="price-card__currency">$</span>129.99</p>
-            <p class="price-card__meta">Brochure + report in <strong>48 hours</strong> after your short form</p>
+            <p class="price-card__meta">Brochure + report in <strong>48 hours</strong> after you paste your listing</p>
             <ul class="price-card__notes">
-              <li>Easy: ~<strong>5 minutes</strong> from you right after pay (step-by-step form).</li>
+              <li>Pay → paste listing link below (<strong>~10 seconds</strong>).</li>
               <li>
                 Full refund if we don’t deliver within <strong>5 business days</strong> of your completed form.
               </li>
@@ -445,7 +433,7 @@
             >
           </div>
           <p class="checkout__next">
-            After payment, <a href="#intake">scroll to the form below</a> (same page).
+            Pay → <a href="#intake">paste your listing link below</a> (~10 seconds, same page).
           </p>
           <p id="prequal-stripe-hint" class="hint hint--stripe" role="status" hidden>
             Secure checkout is being connected. Questions? Email
@@ -456,27 +444,32 @@
 
       <section id="intake" class="section section--soft intake" aria-labelledby="intake-heading">
         <div class="wrap">
-          <h2 class="section__title" id="intake-heading">After you pay — 5-minute form</h2>
+          <h2 class="section__title" id="intake-heading">One thing we need from you</h2>
           <p class="section__intro section__intro--tight">
-            Keep your Stripe receipt for your records, then complete the short form here. Responses are emailed to our
-            team.
+            We use your <strong>receipt email from Stripe</strong> — no email field here. Paste your
+            <strong>Google Maps listing link</strong> or <strong>business name + city</strong>. We generate your kit from
+            your listing; you never write marketing copy.
           </p>
           <p class="intake__support">
             <strong>Support / questions:</strong>
             <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>
           </p>
-          <div class="intake__embed intake__embed--placeholder" id="intake-form-slot">
-            <div class="intake-form-placeholder">
-              <p class="intake-form-placeholder__title">Order form goes live with your link</p>
-              <p class="intake-form-placeholder__text">
-                The questionnaire loads here once your Google Form is connected. Until then, email us your business name,
-                service area, and Google Maps listing link (or name + city) and we will guide you.
-              </p>
-              <p class="intake-form-placeholder__cta">
-                <a class="btn btn--primary" href="mailto:alphapulsx@gmail.com">Email alphapulsx@gmail.com</a>
-              </p>
+          <form id="listing-intake-form" class="intake-capture" novalidate>
+            <label class="intake-capture__label" for="listing-id">Google Maps listing link or business name + city</label>
+            <div class="intake-capture__row">
+              <input
+                id="listing-id"
+                class="intake-capture__input"
+                type="text"
+                name="listing_identifier"
+                autocomplete="url"
+                placeholder="https://maps.google.com/… or Acme Plumbing, Denver"
+                required
+              />
+              <button type="submit" class="btn btn--primary intake-capture__submit">Submit</button>
             </div>
-          </div>
+            <p class="intake-capture__hint">Opens a one-question confirmation (~10 seconds). No prose required.</p>
+          </form>
         </div>
       </section>
 
@@ -494,7 +487,7 @@
             </div>
             <div class="faq__row">
               <dt>Your time?</dt>
-              <dd>~5 minutes after pay for the short, easy form; then copy-and-paste steps whenever your kit arrives.</dd>
+              <dd>~10 seconds after pay to paste your listing link or name + city; then copy-and-paste steps whenever your kit arrives.</dd>
             </div>
             <div class="faq__row">
               <dt>Why 48 hours?</dt>

@@ -13,7 +13,7 @@ Complete these in order. Replace placeholders with your real IDs; **never** past
 1. Create a new **Google Sheet** in that folder.
 2. Add a header row with at least these columns (names can match your Script):
 
-   | session_id | customer_email | paid_at | status | doc_url | approved | sent | notes |
+   | session_id | customer_email | listing_identifier | status | doc_url | approved | sent | notes |
 
 3. Use **consistent** types for **`approved`** and **`sent`**: e.g. checkboxes or TRUE/FALSE.
 4. Open **Extensions → Apps Script** (or link a standalone project) and paste code from **`automation/Code.gs`** in this repo, then adjust column indices / sheet name to match your sheet.
@@ -57,14 +57,13 @@ Optional: `OPENAI_API_KEY`, `AI_INSERT_MODE`, folder IDs, etc.
 
 **Optional hardening:** Stripe publishes webhook IP ranges; enforcing allowlists inside Apps Script alone is limited — signature verification is the standard control.
 
-## 7. Google Form (intake) and prefill
+## 7. Google Form (1 question) and prefill
 
-1. Create the **intake Form**; add a **short answer** field for **Stripe session id** (or hide it and prefill only from URL).
-2. Use **Get pre-filled link** to discover `entry.XXXXX=` IDs for each field.
-3. Build the embed URL for **`index.html`**:  
-   `https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true&entry.SESSION_FIELD={CHECKOUT_SESSION_ID}`  
-   You cannot put Stripe’s placeholder inside the static HTML alone — use Payment Link redirect query params and optional small JS on the page to append `entry.…` for the iframe **if** you want dynamic prefill; or document a two-step flow. See **`docs/automation-full-stack.md`**.
-4. Replace the **placeholder block** under **`#intake`** in **`index.html`** with your real Form **iframe** embed (see **`docs/free-launch-checklist.md`**).
+1. Create intake Form with **one** visible question: **listing link or business name + city**. **No email field** (Stripe is authoritative).
+2. Optional second field: **`session_id`** (prefilled from success URL via **`app.js`**).
+3. **Get pre-filled link** → map `entry.…` IDs into **`app.js`** (`YOUR_FORM_ID`, `YOUR_ENTRY_ID`, `YOUR_SESSION_ENTRY_ID`).
+4. **`index.html`** already ships on-page **`#listing-id`** + Submit — no iframe. See **`docs/free-launch-checklist.md`**.
+5. Implement **`mergeFormResponseBySessionId_`** (stub in **`automation/Code.gs`**) on Form submit trigger when ready.
 
 ## 8. Triggers (approval → send)
 

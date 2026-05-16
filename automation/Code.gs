@@ -72,12 +72,11 @@ function doPost(e) {
     var customerEmail = obj.customer_details && obj.customer_details.email
       ? obj.customer_details.email
       : (obj.customer_email || '');
-    var paidAt = obj.created ? new Date(obj.created * 1000).toISOString() : new Date().toISOString();
-
-    appendSheetRow_(sessionId, customerEmail, paidAt, 'AWAITING_REVIEW');
+    // listing_identifier filled later via Form merge or Stripe Checkout custom field
+    appendSheetRow_(sessionId, customerEmail, '', 'AWAITING_INTAKE');
 
     // Optional: create Doc immediately or defer to time-based trigger
-    // var docUrl = createKitDoc(sessionId, customerEmail);
+    // var docUrl = createKitDoc(sessionId, customerEmail, listingIdentifier);
     // updateSheetDocUrl_(sessionId, docUrl);
 
     return textResponse_('ok', 200);
@@ -149,7 +148,7 @@ function timingSafeEqualHex_(a, b) {
   return result === 0;
 }
 
-function appendSheetRow_(sessionId, customerEmail, paidAt, status) {
+function appendSheetRow_(sessionId, customerEmail, listingIdentifier, status) {
   var props = PropertiesService.getScriptProperties();
   var sheetId = props.getProperty(PROP_SHEET_ID);
   var sheetName = props.getProperty(PROP_SHEET_NAME) || 'Orders';
@@ -157,11 +156,11 @@ function appendSheetRow_(sessionId, customerEmail, paidAt, status) {
 
   var ss = SpreadsheetApp.openById(sheetId);
   var sh = ss.getSheetByName(sheetName) || ss.getSheets()[0];
-  // session_id, customer_email, paid_at, status, doc_url, approved, sent, notes
+  // session_id, customer_email, listing_identifier, status, doc_url, approved, sent, notes
   sh.appendRow([
     sessionId,
     customerEmail,
-    paidAt,
+    listingIdentifier || '',
     status,
     '',
     false,
@@ -171,12 +170,51 @@ function appendSheetRow_(sessionId, customerEmail, paidAt, status) {
 }
 
 /**
+ * Merge a 1-question Form response into the Sheet row with matching session_id.
+ * Wire to Form trigger onFormSubmit(e) when ready — map e.namedValues to your question titles.
+ *
+ * Example:
+ *   var sessionId = e.namedValues['session_id'][0];
+ *   var listingId = e.namedValues['Listing link or business name + city'][0];
+ *   mergeFormResponseBySessionId_(sessionId, listingId);
+ */
+function mergeFormResponseBySessionId_(sessionId, listingIdentifier) {
+  if (!sessionId || !listingIdentifier) return false;
+
+  var props = PropertiesService.getScriptProperties();
+  var sheetId = props.getProperty(PROP_SHEET_ID);
+  var sheetName = props.getProperty(PROP_SHEET_NAME) || 'Orders';
+  if (!sheetId) throw new Error('Missing SHEET_ID');
+
+  var sh = SpreadsheetApp.openById(sheetId).getSheetByName(sheetName) ||
+    SpreadsheetApp.openById(sheetId).getSheets()[0];
+  var data = sh.getDataRange().getValues();
+  if (data.length < 2) return false;
+
+  var col = indexMap_(data[0]);
+  for (var r = 1; r < data.length; r++) {
+    if (String(data[r][col.session_id]) === String(sessionId)) {
+      sh.getRange(r + 1, col.listing_identifier + 1).setValue(listingIdentifier);
+      if (typeof col.status === 'number' && col.status >= 0) {
+        var st = data[r][col.status];
+        if (st === 'AWAITING_INTAKE' || st === '') {
+          sh.getRange(r + 1, col.status + 1).setValue('NEEDS_GENERATION');
+        }
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Copy template Doc, name by session id, return URL.
  * @param {string} sessionId
  * @param {string} customerEmail
+ * @param {string} listingIdentifier - Maps URL or "Business, City" for AI / listing snapshot
  * @return {string} URL of the new Doc
  */
-function createKitDoc(sessionId, customerEmail) {
+function createKitDoc(sessionId, customerEmail, listingIdentifier) {
   var props = PropertiesService.getScriptProperties();
   var templateId = props.getProperty(PROP_TEMPLATE_DOC);
   if (!templateId) throw new Error('Missing TEMPLATE_DOC_ID');
@@ -185,10 +223,12 @@ function createKitDoc(sessionId, customerEmail) {
   var copy = templateFile.makeCopy('Listing kit — ' + sessionId);
   var doc = DocumentApp.openById(copy.getId());
 
-  // Optional: replace placeholders in body
+  // Optional: replace placeholders; AI prompt should use listingIdentifier (not customer prose)
   // var body = doc.getBody();
   // body.replaceText('{{SESSION_ID}}', sessionId);
   // body.replaceText('{{CUSTOMER_EMAIL}}', customerEmail);
+  // body.replaceText('{{LISTING_IDENTIFIER}}', listingIdentifier || '');
+  // UrlFetchApp → OpenAI: "Generate kit from listing: " + listingIdentifier
 
   doc.saveAndClose();
 
@@ -247,7 +287,7 @@ function indexMap_(headers) {
   return {
     session_id: map['session_id'],
     customer_email: map['customer_email'],
-    paid_at: map['paid_at'],
+    listing_identifier: map['listing_identifier'],
     status: map['status'],
     doc_url: map['doc_url'],
     approved: map['approved'],

@@ -1288,7 +1288,67 @@ body.has-sticky {
   min-height: 2.5rem;
 }
 
-/* Post-checkout intake (embedded Google Form) */
+/* Post-checkout intake — single-field capture */
+.intake-capture {
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.intake-capture__label {
+  display: block;
+  margin: 0 0 var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--teal-ink);
+}
+
+.intake-capture__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: stretch;
+}
+
+.intake-capture__input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.intake-capture__input:focus {
+  outline: 2px solid var(--teal-muted);
+  outline-offset: 2px;
+  border-color: var(--teal-muted);
+}
+
+.intake-capture__submit {
+  flex: 0 0 auto;
+  align-self: stretch;
+}
+
+.intake-capture__hint {
+  margin: var(--space-sm) 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+@media (max-width: 479px) {
+  .intake-capture__submit {
+    width: 100%;
+  }
+}
+
 .checkout__next {
   margin: var(--space-sm) 0 0;
   font-size: var(--text-sm);

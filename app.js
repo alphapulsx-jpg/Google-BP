@@ -49,7 +49,62 @@
     window.addEventListener("hashchange", maybeScrollFromUrl);
   }
 
+  /**
+   * Minimal on-page capture: one field opens a prefilled 1-question Google Form.
+   * Owner: replace YOUR_FORM_ID and YOUR_ENTRY_ID (listing_identifier).
+   * Optional: YOUR_SESSION_ENTRY_ID for hidden session_id (Stripe redirect ?session_id=).
+   */
+  function initListingIntakeSubmit() {
+    var intakeForm = document.getElementById("listing-intake-form");
+    var listingInput = document.getElementById("listing-id");
+    if (!intakeForm || !listingInput) return;
+
+    // https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?entry.YOUR_ENTRY_ID=
+    var GOOGLE_FORM_BASE = "https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform";
+    var ENTRY_LISTING = "YOUR_ENTRY_ID";
+    var ENTRY_SESSION = "YOUR_SESSION_ENTRY_ID";
+
+    function getSessionIdFromUrl() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        return (
+          params.get("session_id") ||
+          params.get("checkout_session_id") ||
+          ""
+        ).trim();
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function buildPrefilledFormUrl(listingValue) {
+      var url =
+        GOOGLE_FORM_BASE +
+        "?entry." +
+        ENTRY_LISTING +
+        "=" +
+        encodeURIComponent(listingValue);
+      var sessionId = getSessionIdFromUrl();
+      if (sessionId && ENTRY_SESSION && ENTRY_SESSION !== "YOUR_SESSION_ENTRY_ID") {
+        url += "&entry." + ENTRY_SESSION + "=" + encodeURIComponent(sessionId);
+      }
+      return url;
+    }
+
+    intakeForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var value = String(listingInput.value || "").trim();
+      if (!value) {
+        listingInput.focus();
+        return;
+      }
+      var target = buildPrefilledFormUrl(value);
+      window.open(target, "_blank", "noopener,noreferrer");
+    });
+  }
+
   initIntakeDeepLink();
+  initListingIntakeSubmit();
 
   var form = document.getElementById("prequal-form");
   if (!form) return;
