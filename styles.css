@@ -122,6 +122,10 @@ body.has-sticky {
 }
 
 .hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   padding-top: var(--space-xs);
 }
 
@@ -145,7 +149,7 @@ body.has-sticky {
 }
 
 .hero h1 {
-  margin: 0 0 var(--space-sm);
+  margin: 0 auto var(--space-sm);
   font-size: var(--text-display);
   line-height: 1.12;
   font-weight: 700;
@@ -155,7 +159,8 @@ body.has-sticky {
 }
 
 .hero__taglines {
-  margin: 0 0 var(--space-md);
+  margin: 0 auto var(--space-md);
+  width: 100%;
   max-width: 36ch;
 }
 
@@ -186,6 +191,7 @@ body.has-sticky {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  justify-content: center;
   gap: 0.15em 0.35em;
 }
 
@@ -231,7 +237,9 @@ body.has-sticky {
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ink);
+  width: 100%;
   max-width: 36ch;
+  text-align: left;
 }
 
 .hero__trust li {
@@ -249,10 +257,11 @@ body.has-sticky {
 }
 
 .hero__legal {
-  margin: var(--space-sm) 0 0;
+  margin: var(--space-sm) auto 0;
   font-size: var(--text-xs);
   line-height: 1.5;
   color: var(--ink-muted);
+  width: 100%;
   max-width: 38ch;
 }
 
