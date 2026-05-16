@@ -6,6 +6,51 @@
     y.textContent = String(new Date().getFullYear());
   }
 
+  function initIntakeDeepLink() {
+    var intake = document.getElementById("intake");
+    if (!intake) return;
+
+    function paramsHaveStripeSession() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        return params.has("session_id") || params.has("checkout_session_id");
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function shouldScrollToIntake() {
+      var hash = (window.location.hash || "").replace(/^#/, "");
+      return hash === "intake" || paramsHaveStripeSession();
+    }
+
+    function pulseIntake() {
+      intake.classList.add("intake--pulse");
+      window.setTimeout(function () {
+        intake.classList.remove("intake--pulse");
+      }, 2100);
+    }
+
+    function scrollToIntake() {
+      var reduceMotion =
+        window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      intake.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      pulseIntake();
+    }
+
+    function maybeScrollFromUrl() {
+      if (!shouldScrollToIntake()) return;
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(scrollToIntake);
+      });
+    }
+
+    maybeScrollFromUrl();
+    window.addEventListener("hashchange", maybeScrollFromUrl);
+  }
+
+  initIntakeDeepLink();
+
   var form = document.getElementById("prequal-form");
   if (!form) return;
 

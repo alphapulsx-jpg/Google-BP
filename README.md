@@ -31,7 +31,7 @@ The primary CTA in `index.html` uses a **placeholder** Stripe URL:
 
 `https://buy.stripe.com/test_replace_me`
 
-Replace that URL with your real **Stripe Payment Link** priced at **$129.99** in `index.html` (search for `test_replace_me`). In the Stripe dashboard, set the payment link’s **after-payment redirect** to your intake form (see `docs/intake.md`).
+Replace that URL with your real **Stripe Payment Link** priced at **$129.99** in `index.html` (search for `test_replace_me`). Set the link’s **after-payment redirect** to the same site’s intake section (anchor `#intake`), and wire **Google Forms** + **Gmail** notifications — see **`docs/free-launch-checklist.md`** (also `docs/intake.md` for product copy).
 
 ## Local preview
 

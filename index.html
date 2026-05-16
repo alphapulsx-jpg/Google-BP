@@ -445,8 +445,43 @@
               >Get my kit — $129.99</a
             >
           </div>
+          <p class="checkout__next">
+            After payment, <a href="#intake">scroll to the form below</a> (same page).
+          </p>
           <p class="fineprint">
-            Replace with your live Stripe Payment Link at <strong>$129.99</strong>; redirect to your form after payment.
+            Replace <code>test_replace_me</code> with your live Stripe Payment Link at <strong>$129.99</strong>. Set the
+            link’s redirect to this page’s intake section — see
+            <a href="docs/free-launch-checklist.md">docs/free-launch-checklist.md</a>.
+          </p>
+        </div>
+      </section>
+
+      <section id="intake" class="section section--soft intake" aria-labelledby="intake-heading">
+        <div class="wrap">
+          <h2 class="section__title" id="intake-heading">After you pay — 5-minute form</h2>
+          <p class="section__intro section__intro--tight">
+            Keep your Stripe receipt for your records, then complete the short form here. Responses are emailed to our
+            team (Google Forms + Gmail notifications — no Zapier or server in v1).
+          </p>
+          <p class="intake__support">
+            <strong>Support / questions:</strong>
+            <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>
+          </p>
+          <!-- Replace YOUR_FORM_ID in the iframe src and the “Open form” link with your real form ID from Google Forms → Send → embed HTML (…/viewform?embedded=true). -->
+          <div class="intake__embed">
+            <iframe
+              title="Intake questionnaire after payment"
+              loading="lazy"
+              src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
+            ></iframe>
+          </div>
+          <p class="intake__fallback">
+            <a
+              href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+              >Open form in new tab</a
+            >
           </p>
         </div>
       </section>
