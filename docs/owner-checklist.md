@@ -64,7 +64,7 @@ Optional: `OPENAI_API_KEY`, `AI_INSERT_MODE`, folder IDs, etc.
 3. Build the embed URL for **`index.html`**:  
    `https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true&entry.SESSION_FIELD={CHECKOUT_SESSION_ID}`  
    You cannot put Stripe’s placeholder inside the static HTML alone — use Payment Link redirect query params and optional small JS on the page to append `entry.…` for the iframe **if** you want dynamic prefill; or document a two-step flow. See **`docs/automation-full-stack.md`**.
-4. Replace **`YOUR_FORM_ID`** in **`index.html`** with your real Form id.
+4. Replace the **placeholder block** under **`#intake`** in **`index.html`** with your real Form **iframe** embed (see **`docs/free-launch-checklist.md`**).
 
 ## 8. Triggers (approval → send)
 

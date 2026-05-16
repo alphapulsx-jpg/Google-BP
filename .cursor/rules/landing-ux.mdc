@@ -18,7 +18,7 @@ Before shipping changes to `index.html`, `styles.css`, or `app.js`, confirm:
 4. **Deliverables** — Scannable numbered or icon list; lead with brochure + report outcome (customer applies changes).
 5. **Proof** — Sample report with before/after (fictional business); optional form preview; no fake testimonials.
 6. **Flow** — “After you pay”: Pay → Short form (~5 min) → Brochure + report in **48 hours**.
-7. **CTA** — $129.99 + 3 confirm checkboxes gate Stripe; placeholder URL `https://buy.stripe.com/test_replace_me` until live.
+7. **CTA** — $129.99 + 3 confirm checkboxes gate Stripe; set **`data-stripe-url`** on **`#pay-cta`** to a `https://buy.stripe.com/…` Payment Link before go-live (see **`docs/setup-what-you-need.md`**).
 8. **Objections** — FAQ capped at **5** items (include “Why 48 hours?”); footer disclaimer one line.
 9. **Mobile** — Sticky bottom bar: price + gated CTA when pre-qual passes; safe-area padding.
 
@@ -54,5 +54,5 @@ Add competitor/reference URLs when provided. Until then, pattern-match high-conv
 
 ## Do not break
 
-- Stripe placeholder link and 3 `name="prequal"` checkboxes.
-- `app.js` gate: both `#pay-cta` and `#pay-cta-sticky` stay disabled until all boxes checked.
+- **`data-stripe-url`** on **`#pay-cta`** (Payment Link) and 3 `name="prequal"` checkboxes.
+- `app.js` gate: both `#pay-cta` and `#pay-cta-sticky` stay disabled until all boxes are checked **and** `data-stripe-url` is a `https://buy.stripe.com/…` URL.

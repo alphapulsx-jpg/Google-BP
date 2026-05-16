@@ -58,8 +58,42 @@
   var cta = document.getElementById("pay-cta");
   var ctaSticky = document.getElementById("pay-cta-sticky");
   var hint = document.getElementById("prequal-hint");
+  var stripeHint = document.getElementById("prequal-stripe-hint");
   var stickyBar = document.getElementById("sticky-bar");
   var checkout = document.getElementById("checkout");
+
+  function getStripePaymentUrl() {
+    if (!cta) return "";
+    return String(cta.getAttribute("data-stripe-url") || "").trim();
+  }
+
+  function isStripePaymentConfigured(url) {
+    return /^https:\/\/buy\.stripe\.com\//i.test(url);
+  }
+
+  function applyCheckoutHref(url) {
+    var safe = isStripePaymentConfigured(url) ? url : "#checkout";
+    if (cta) {
+      cta.setAttribute("href", safe);
+      if (isStripePaymentConfigured(url)) {
+        cta.setAttribute("target", "_blank");
+        cta.setAttribute("rel", "noopener noreferrer");
+      } else {
+        cta.removeAttribute("target");
+        cta.removeAttribute("rel");
+      }
+    }
+    if (ctaSticky) {
+      ctaSticky.setAttribute("href", safe);
+      if (isStripePaymentConfigured(url)) {
+        ctaSticky.setAttribute("target", "_blank");
+        ctaSticky.setAttribute("rel", "noopener noreferrer");
+      } else {
+        ctaSticky.removeAttribute("target");
+        ctaSticky.removeAttribute("rel");
+      }
+    }
+  }
 
   function setCtaState(el, enabled) {
     if (!el) return;
@@ -96,10 +130,17 @@
         break;
       }
     }
-    setCtaState(cta, allChecked);
-    setCtaState(ctaSticky, allChecked);
+    var stripeUrl = getStripePaymentUrl();
+    var stripeReady = isStripePaymentConfigured(stripeUrl);
+    var canPay = allChecked && stripeReady;
+    applyCheckoutHref(stripeUrl);
+    setCtaState(cta, canPay);
+    setCtaState(ctaSticky, canPay);
     if (hint) {
       hint.hidden = allChecked;
+    }
+    if (stripeHint) {
+      stripeHint.hidden = !allChecked || stripeReady;
     }
   }
 

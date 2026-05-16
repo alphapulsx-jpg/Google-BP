@@ -27,13 +27,13 @@ Structured data (JSON-LD), canonical URL, and Open Graph / Twitter tags live in 
 
 ## Stripe Payment Link (required before go-live)
 
-The primary CTA in `index.html` uses a **placeholder** Stripe URL:
+The primary checkout button in **`index.html`** reads your live URL from **`data-stripe-url`** on **`#pay-cta`** (must look like `https://buy.stripe.com/…`). Paste your **Stripe Payment Link** for **$129.99** there. Set the link’s **after-payment redirect** to your site’s intake section (`#intake`). Until `data-stripe-url` is set, the pay buttons stay disabled even when the three confirmation boxes are checked.
 
-`https://buy.stripe.com/test_replace_me`
-
-Replace that URL with your real **Stripe Payment Link** priced at **$129.99** in `index.html` (search for `test_replace_me`). Set the link’s **after-payment redirect** to the same site’s intake section (anchor `#intake`), and wire **Google Forms** + **Gmail** notifications — see **`docs/free-launch-checklist.md`** (also `docs/intake.md` for product copy).
+For Forms, Gmail notifications, and the static-site launch order, see **`docs/free-launch-checklist.md`** and **`docs/intake.md`**.
 
 ## Full automation (Google only)
+
+**Owner-facing setup (checkboxes, what to send us):** **[`docs/setup-what-you-need.md`](docs/setup-what-you-need.md)**
 
 GitHub Pages **cannot** verify Stripe webhooks or send mail. For a **100% automated** payment path with an **owner approval gate** before the customer is emailed, use **Google Apps Script** (Web App) + **Sheets** + **Docs** + **Gmail** — see:
 

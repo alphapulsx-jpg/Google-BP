@@ -43,7 +43,7 @@
             "@type": "Product",
             "@id": "https://alphapulsx-jpg.github.io/Google-BP/#product",
             "name": "Google listing kit",
-            "description": "Done-for-you Google listing kit for local service pros: printable brochure (PDF), written report, and copy-paste steps. Pay once via Stripe checkout on the landing page (replace placeholder link when live); you apply updates yourself in your Google account.",
+            "description": "Done-for-you Google listing kit for local service pros: printable brochure (PDF), written report, and copy-paste steps. Pay once via Stripe checkout on the landing page; you apply updates yourself in your Google account.",
             "brand": { "@id": "https://alphapulsx-jpg.github.io/Google-BP/#organization" },
             "offers": {
               "@type": "Offer",
@@ -436,9 +436,8 @@
             <a
               id="pay-cta"
               class="btn btn--primary btn--lg is-disabled"
-              href="https://buy.stripe.com/test_replace_me"
-              rel="noopener noreferrer"
-              target="_blank"
+              href="#checkout"
+              data-stripe-url=""
               aria-disabled="true"
               tabindex="-1"
               aria-label="Get my kit — one-time fee $129.99"
@@ -448,42 +447,36 @@
           <p class="checkout__next">
             After payment, <a href="#intake">scroll to the form below</a> (same page).
           </p>
-          <p class="fineprint">
-            Replace <code>test_replace_me</code> with your live Stripe Payment Link at <strong>$129.99</strong>. Set the
-            link’s redirect to this page’s intake section — see
-            <a href="docs/free-launch-checklist.md">docs/free-launch-checklist.md</a>.
+          <p id="prequal-stripe-hint" class="hint hint--stripe" role="status" hidden>
+            Secure checkout is being connected. Questions? Email
+            <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>.
           </p>
         </div>
       </section>
 
-      <!-- Full-stack automation (Stripe webhook → Apps Script → Sheet approval → Gmail): see docs/automation-full-stack.md -->
       <section id="intake" class="section section--soft intake" aria-labelledby="intake-heading">
         <div class="wrap">
           <h2 class="section__title" id="intake-heading">After you pay — 5-minute form</h2>
           <p class="section__intro section__intro--tight">
             Keep your Stripe receipt for your records, then complete the short form here. Responses are emailed to our
-            team (Google Forms + Gmail notifications — no Zapier or server in v1).
+            team.
           </p>
           <p class="intake__support">
             <strong>Support / questions:</strong>
             <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>
           </p>
-          <!-- Replace YOUR_FORM_ID in the iframe src and the “Open form” link with your real form ID from Google Forms → Send → embed HTML (…/viewform?embedded=true). -->
-          <div class="intake__embed">
-            <iframe
-              title="Intake questionnaire after payment"
-              loading="lazy"
-              src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
-            ></iframe>
+          <div class="intake__embed intake__embed--placeholder" id="intake-form-slot">
+            <div class="intake-form-placeholder">
+              <p class="intake-form-placeholder__title">Order form goes live with your link</p>
+              <p class="intake-form-placeholder__text">
+                The questionnaire loads here once your Google Form is connected. Until then, email us your business name,
+                service area, and Google Maps listing link (or name + city) and we will guide you.
+              </p>
+              <p class="intake-form-placeholder__cta">
+                <a class="btn btn--primary" href="mailto:alphapulsx@gmail.com">Email alphapulsx@gmail.com</a>
+              </p>
+            </div>
           </div>
-          <p class="intake__fallback">
-            <a
-              href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
-              rel="noopener noreferrer"
-              target="_blank"
-              >Open form in new tab</a
-            >
-          </p>
         </div>
       </section>
 
@@ -543,9 +536,7 @@
         <a
           id="pay-cta-sticky"
           class="btn btn--primary btn--sm is-disabled"
-          href="https://buy.stripe.com/test_replace_me"
-          rel="noopener noreferrer"
-          target="_blank"
+          href="#checkout"
           aria-disabled="true"
           tabindex="-1"
           aria-label="Get my kit — one-time fee $129.99"

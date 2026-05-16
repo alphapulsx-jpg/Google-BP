@@ -11,7 +11,9 @@ Use this for a **one-page** flow: pay on Stripe → land on the same site → em
 ## 2. Embed the form on the landing page
 
 1. In the form editor: **Send** → **&lt;&gt;** (embed) → copy the embed URL (it ends with `viewform?embedded=true`).
-2. In `index.html`, search for **`YOUR_FORM_ID`** and replace it with your real form path segment (the long ID from Google’s embed URL), in **both** the `<iframe src="…">` and the “Open form in new tab” link.
+2. In **`index.html`**, find the **“Order form goes live with your link”** placeholder under **`#intake`**. Replace that placeholder block with your real **`<iframe …>`** from Google (and optional “Open form in new tab” link using the same form path segment from the embed URL).
+
+For a plain-English owner checklist (Stripe, Form, Doc, Apps Script), see **`docs/setup-what-you-need.md`**.
 
 ## 3. Stripe Payment Link (no secret keys in the repo)
 
@@ -26,7 +28,7 @@ Use this for a **one-page** flow: pay on Stripe → land on the same site → em
 
    The site’s `app.js` scrolls to `#intake` when `session_id` (or `checkout_session_id`) appears in the query string. **This is client-side only:** the presence of `session_id` in the URL does **not** cryptographically prove payment without a **Stripe webhook** or server-side session lookup. For an MVP / honest flow, Stripe’s receipt email + your redirect is usually enough; add a webhook later if you need verified “paid before form” gating.
 
-4. In `index.html`, replace the placeholder payment link **`https://buy.stripe.com/test_replace_me`** (search for **`test_replace_me`**) with your live Payment Link URL.
+4. On **`#pay-cta`** in **`index.html`**, set **`data-stripe-url="https://buy.stripe.com/…"`** to your live Payment Link (the pay buttons read this attribute; they stay disabled until it is set and all three checkboxes are checked).
 
 **Never** commit Stripe **secret** keys, `.env` files, or webhook signing secrets to this public static repo.
 
@@ -34,4 +36,4 @@ Use this for a **one-page** flow: pay on Stripe → land on the same site → em
 
 1. Open the live GitHub Pages URL.
 2. Complete a **test** card payment (if using Stripe test mode) or a small real payment.
-3. Confirm redirect lands on **`#intake`**, the embedded form loads, submit a test response, and **alphapulsx@gmail.com** receives the notification.
+3. Confirm redirect lands on **`#intake`**, the **intake form** (embedded iframe after you replace the placeholder) loads, submit a test response, and **alphapulsx@gmail.com** receives the notification.
