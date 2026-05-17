@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="More visibility, more calls, better jobs in 48h. Done-for-you Google listing kit for local service pros. $129.99 one-time, email delivery only, no sales calls."
+      content="Free Google Maps listing scan. Full kit in ~90 seconds. $129.99 one-time. Not charged if we can't read your listing link."
     />
-    <title>Google listing kit · $129.99 one-time · 48h</title>
+    <title>Google listing kit · free scan · $129.99 one-time</title>
     <link rel="canonical" href="https://alphapulsx-jpg.github.io/Google-BP/" />
-    <meta property="og:title" content="Google listing kit · $129.99 one-time · 48h" />
+    <meta property="og:title" content="Google listing kit · free scan · $129.99" />
     <meta
       property="og:description"
-      content="More visibility, more calls, better jobs in 48h. Done-for-you Google listing kit for local service pros. $129.99 one-time, email delivery only, no sales calls."
+      content="Paste your Maps link — free scan. Full brochure + paste-ready report in ~90 seconds. One-time $129.99. Not charged if we can't read your link."
     />
     <meta property="og:url" content="https://alphapulsx-jpg.github.io/Google-BP/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Google listing kit · $129.99 one-time · 48h" />
+    <meta name="twitter:title" content="Google listing kit · free scan · $129.99" />
     <meta
       name="twitter:description"
-      content="More visibility, more calls, better jobs in 48h. Done-for-you Google listing kit for local service pros. $129.99 one-time, email delivery only, no sales calls."
+      content="Paste your Maps link — free scan. Full kit in ~90 seconds. One-time $129.99. Not charged if we can't read your link."
     />
     <script type="application/ld+json">
       {
@@ -43,7 +43,7 @@
             "@type": "Product",
             "@id": "https://alphapulsx-jpg.github.io/Google-BP/#product",
             "name": "Google listing kit",
-            "description": "Done-for-you Google listing kit for local service pros: printable brochure (PDF), written report, and copy-paste steps. Pay once via Stripe checkout on the landing page; you apply updates yourself in your Google account.",
+            "description": "Automated Google Maps listing kit for local service businesses: free scan, full brochure and paste-ready report in about 90 seconds. One-time $129.99. Not charged if your listing link cannot be read.",
             "brand": { "@id": "https://alphapulsx-jpg.github.io/Google-BP/#organization" },
             "offers": {
               "@type": "Offer",
@@ -59,42 +59,34 @@
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "Why pay first?",
+                "name": "Why scan before you pay?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Fixed price, fast delivery — no sales pitch and no interruptions; the whole process stays in email."
+                  "text": "You see your listing score and top issues free — then decide if the full kit is worth $129.99."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Need a website?",
+                "name": "What if my Maps link does not work?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Helpful, not required — Google listing only."
+                  "text": "Link guarantee: if we cannot read your Google Maps listing from your link, you are not charged — automatic refund."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Your time?",
+                "name": "Why about 90 seconds?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "~10 seconds after pay to paste your listing link or business name + city; then copy-and-paste steps whenever your kit arrives."
+                  "text": "After payment your listing is scanned automatically — brochure and report are generated and emailed fast. You paste the updates yourself."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Why 48 hours?",
+                "name": "Is this a website audit?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Automated research + spot-check before send — you still apply every update."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Phone support?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Everything is in email and your kit — work on your own time with no scheduled calls."
+                  "text": "No — this is Google Maps / Business Profile only. No website rebuild, ads, or monthly SEO."
                 }
               },
               {
@@ -102,7 +94,7 @@
                 "name": "Do you need my Google password?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "No — your Google account stays yours. You sign in to your own listing and paste what we send; no passwords or manager invites needed."
+                  "text": "No — your Google account stays yours. You sign in to your own listing and paste what we send."
                 }
               }
             ]
@@ -124,30 +116,162 @@
     <header class="hero">
       <div class="wrap hero__inner">
         <p class="hero__eyebrow">Google listing kit</p>
-        <h1 id="main">More visibility. More calls. Better jobs — in 48 hours.</h1>
-        <div class="hero__taglines">
-          <p>A done‑for‑you Google listing kit for local service pros.</p>
-          <p>You paste the updates. I build the kit.</p>
-          <p>No sales calls. No back‑and‑forth. Email delivery only.</p>
-        </div>
+        <h1 id="main">Your Google listing is costing you calls — fix it without an agency</h1>
+        <p class="hero__lede">
+          Paste your Maps link for a <strong>free scan</strong>. See your score and top issues — then get the full
+          brochure + paste-ready report in <strong>~90 seconds</strong> after you pay.
+        </p>
+
+        <form id="scan-form" class="scan-form" novalidate>
+          <label class="visually-hidden" for="scan-input">Google Maps listing link or business name, city</label>
+          <div class="scan-form__row">
+            <input
+              id="scan-input"
+              class="scan-form__input"
+              type="text"
+              name="listing_identifier"
+              autocomplete="url"
+              placeholder="https://maps.google.com/… or Acme Plumbing, Denver"
+              required
+            />
+            <button type="submit" class="btn btn--primary scan-form__submit" id="scan-submit">
+              Scan free
+            </button>
+          </div>
+          <p id="scan-error" class="scan-form__error" role="alert" hidden>
+            Paste a Google Maps link (maps.google.com, google.com/maps, or goo.gl/maps) or business name + city (comma,
+            at least 8 characters).
+          </p>
+          <p class="scan-form__hint">No account needed · results on this page · ~2 seconds</p>
+        </form>
+
+        <p class="hero__guarantee">
+          <strong>Link guarantee:</strong> if we can’t read your Google Maps listing, you’re
+          <strong>not charged</strong> — automatic refund.
+        </p>
+
         <p class="hero__price">
           <span class="hero__price-amount">$129.99</span>
           <span class="hero__price-sep">/</span>
-          <span class="hero__price-term">delivered in 48 hours</span>
+          <span class="hero__price-term">one-time · full kit in ~90 seconds after pay</span>
         </p>
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="#checkout">Get my kit — $129.99</a>
-        </div>
+
         <ul class="hero__trust" aria-label="Why this works">
-          <li>Printable brochure + written report — clear checklist, ready-to-use wording, plain-English steps</li>
-          <li>Your Google account stays yours — secure; nothing to share; you stay in control applying updates</li>
-          <li>Full refund if your kit isn’t delivered within 5 business days of your completed form</li>
+          <li>Real listing scoring — not generic SEO fluff</li>
+          <li>Pay once — no subscription, no sales calls</li>
+          <li>Link guarantee — not charged if we can’t read your Maps link</li>
         </ul>
         <p class="hero__legal">DIY guidance only — no ranking or call guarantees.</p>
       </div>
     </header>
 
     <main class="main">
+      <section
+        id="scan-results"
+        class="section section--soft scan-results"
+        aria-labelledby="scan-results-heading"
+        hidden
+      >
+        <div class="wrap">
+          <p class="section__kicker">Free scan results</p>
+          <h2 class="section__title" id="scan-results-heading">Your listing snapshot</h2>
+          <p class="section__intro section__intro--tight">
+            Sample scoring from your input — your paid kit uses a full automated scan of the same listing.
+          </p>
+
+          <div class="scan-score" aria-label="Listing health score">
+            <div class="scan-score__col scan-score__col--before">
+              <span class="scan-score__label">Today</span>
+              <span class="scan-score__value" id="scan-score-before">—</span>
+              <span class="scan-score__unit">/ 100</span>
+            </div>
+            <div class="scan-score__arrow" aria-hidden="true">→</div>
+            <div class="scan-score__col scan-score__col--after">
+              <span class="scan-score__label">With kit applied</span>
+              <span class="scan-score__value" id="scan-score-after">—</span>
+              <span class="scan-score__unit">/ 100</span>
+            </div>
+          </div>
+
+          <h3 class="section__subhead">Top 3 issues holding you back</h3>
+          <ol class="list list--ordered scan-issues" id="scan-issues-list"></ol>
+
+          <p class="scan-results__cta-note">
+            <a class="btn btn--primary" href="#pricing">Get full kit — $129.99</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="pillars-heading">
+        <div class="wrap">
+          <p class="section__kicker">Why us</p>
+          <h2 class="section__title" id="pillars-heading">Built for local trades, not agencies</h2>
+          <ul class="pillars">
+            <li class="pillars__item">
+              <h3 class="pillars__title">Real listing scoring</h3>
+              <p class="pillars__text">
+                Eight dimensions tuned for Google Maps — category, photos, services, reviews, and more. Not a generic
+                website audit.
+              </p>
+            </li>
+            <li class="pillars__item">
+              <h3 class="pillars__title">Pay once</h3>
+              <p class="pillars__text">
+                $129.99 one-time. No subscription, no upsell calls. Brochure PDF + written report emailed after payment.
+              </p>
+            </li>
+            <li class="pillars__item pillars__item--highlight">
+              <h3 class="pillars__title">Link guarantee</h3>
+              <p class="pillars__text">
+                If we can’t read your Google Maps listing from your link, you’re <strong>not charged</strong> — automatic
+                refund. No support ticket required.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--soft" aria-labelledby="how-heading">
+        <div class="wrap">
+          <p class="section__kicker">How it works</p>
+          <h2 class="section__title" id="how-heading">Three steps · ~90 seconds automated</h2>
+          <ol class="flow-steps flow-steps--numbered">
+            <li class="flow-step">
+              <span class="flow-step__num" aria-hidden="true">1</span>
+              <span class="flow-step__label">Free scan</span>
+              <span class="flow-step__desc">Paste your Maps link — see score + top issues on this page.</span>
+            </li>
+            <li class="flow-step">
+              <span class="flow-step__num" aria-hidden="true">2</span>
+              <span class="flow-step__label">Pay once</span>
+              <span class="flow-step__desc">$129.99 · Stripe · listing saved from your scan.</span>
+            </li>
+            <li class="flow-step">
+              <span class="flow-step__num" aria-hidden="true">3</span>
+              <span class="flow-step__label">Kit in ~90 seconds</span>
+              <span class="flow-step__desc">Automated AI scan → brochure PDF + paste-ready report in your inbox.</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="dimensions-heading">
+        <div class="wrap">
+          <p class="section__kicker">What we score</p>
+          <h2 class="section__title" id="dimensions-heading">8 dimensions for your Google listing</h2>
+          <ul class="dimensions">
+            <li class="dimensions__item">Business name &amp; primary category</li>
+            <li class="dimensions__item">Description &amp; services list</li>
+            <li class="dimensions__item">Photos &amp; visual coverage</li>
+            <li class="dimensions__item">Reviews &amp; owner responses</li>
+            <li class="dimensions__item">Hours, phone &amp; attributes</li>
+            <li class="dimensions__item">Q&amp;A completeness</li>
+            <li class="dimensions__item">Google posts &amp; updates</li>
+            <li class="dimensions__item">Local relevance &amp; service area</li>
+          </ul>
+        </div>
+      </section>
+
       <section class="section" aria-labelledby="fit-heading">
         <div class="wrap">
           <h2 class="section__title" id="fit-heading">Good fit?</h2>
@@ -157,7 +281,7 @@
               <ul class="list list--compact">
                 <li>Local trade, under 100 employees, already booking jobs.</li>
                 <li>Thin or outdated Google listing.</li>
-                <li>Happy with simple email instructions — paste updates yourself in a few minutes when it fits.</li>
+                <li>Happy with simple email instructions — paste updates yourself.</li>
               </ul>
             </div>
             <div class="fit-card fit-card--no">
@@ -327,81 +451,47 @@
         </div>
       </section>
 
-      <section class="section section--soft" aria-labelledby="flow-heading">
+      <section class="section section--soft" id="pricing" aria-labelledby="pricing-heading">
         <div class="wrap">
-          <h2 class="section__title" id="flow-heading">After you pay</h2>
-          <ol class="flow-steps">
-            <li class="flow-step">
-              <span class="flow-step__icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="5" width="20" height="14" rx="2" />
-                  <path d="M2 10h20" />
-                </svg>
-              </span>
-              <span class="flow-step__label">Pay</span>
-              <span class="flow-step__desc">$129.99 · Stripe</span>
-            </li>
-            <li class="flow-step__arrow" aria-hidden="true">→</li>
-            <li class="flow-step">
-              <span class="flow-step__icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
-                  <rect x="9" y="3" width="6" height="4" rx="1" />
-                </svg>
-              </span>
-              <span class="flow-step__label">Paste listing</span>
-              <span class="flow-step__desc">One field · ~10 seconds</span>
-            </li>
-            <li class="flow-step__arrow" aria-hidden="true">→</li>
-            <li class="flow-step">
-              <span class="flow-step__icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                  <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
-                </svg>
-              </span>
-              <span class="flow-step__label">Kit in 48 hours</span>
-              <span class="flow-step__desc">Brochure PDF + report in your inbox</span>
-            </li>
-          </ol>
-
-          <div class="intake-preview" aria-labelledby="form-preview-heading">
-            <h3 class="intake-preview__title" id="form-preview-heading">After you pay</h3>
-            <p class="intake-preview__note">One field — your Maps link or business name + city (~10 seconds).</p>
-            <div class="intake-preview__fields" aria-hidden="true">
-              <div class="intake-field">
-                <span class="intake-field__label">Listing link or name + city</span>
-                <span class="intake-field__value intake-field__value--placeholder">maps.google.com/… or Summit Ridge Heating, Littleton</span>
-              </div>
-            </div>
+          <p class="section__kicker">Pricing</p>
+          <h2 class="section__title" id="pricing-heading">One price · full kit</h2>
+          <div class="pricing-panel">
+            <p class="pricing-panel__fee">One-time fee — pay once, no subscription</p>
+            <p class="pricing-panel__amount"><span class="pricing-panel__currency">$</span>129.99</p>
+            <p class="pricing-panel__meta">
+              Brochure + report in <strong>~90 seconds</strong> after payment — automated AI scan of the listing you
+              scanned above.
+            </p>
+            <ul class="pricing-panel__notes">
+              <li><strong>Link guarantee:</strong> not charged if we can’t read your Google Maps listing.</li>
+              <li>You paste every update yourself — no Google password or manager access needed.</li>
+              <li>Email delivery only — no sales calls.</li>
+            </ul>
+            <p class="pricing-panel__cta">
+              <a class="btn btn--primary" href="#checkout">Continue to checkout</a>
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="section" id="checkout" aria-labelledby="price-heading">
+      <section class="section" id="checkout" aria-labelledby="checkout-heading">
         <div class="wrap">
-          <h2 class="section__title" id="price-heading">Checkout</h2>
-          <div class="price-card">
-            <p class="price-card__fee">One-time fee — pay once, no subscription</p>
-            <p class="price-card__amount"><span class="price-card__currency">$</span>129.99</p>
-            <p class="price-card__meta">Brochure + report in <strong>48 hours</strong> after you paste your listing</p>
-            <ul class="price-card__notes">
-              <li>Pay → paste listing link below (<strong>~10 seconds</strong>).</li>
-              <li>
-                Full refund if we don’t deliver within <strong>5 business days</strong> of your completed form.
-              </li>
-            </ul>
-          </div>
+          <h2 class="section__title" id="checkout-heading">Checkout</h2>
+
+          <p id="checkout-listing-summary" class="checkout-listing" hidden>
+            Listing from scan: <strong id="checkout-listing-value"></strong>
+          </p>
+          <input type="hidden" id="listing-id" name="listing_identifier" value="" />
 
           <h3 class="section__subhead" id="confirm-heading">Confirm (required)</h3>
           <form id="prequal-form" class="prequal" novalidate>
             <fieldset>
               <legend class="visually-hidden">Checkout confirmations</legend>
               <label class="check">
-                <input type="checkbox" name="prequal" value="listing" />
+                <input type="checkbox" name="prequal" value="scan" id="prequal-scan" />
                 <span
-                  >I have my <strong>Google Maps listing link</strong>, or <strong>business name + city</strong> so you
-                  can find the right profile.</span
+                  >I completed the <strong>free scan</strong> for my Google Maps listing (or business name +
+                  city).</span
                 >
               </label>
               <label class="check">
@@ -418,7 +508,7 @@
             </fieldset>
           </form>
 
-          <p id="prequal-hint" class="hint" role="status">Check all three boxes to enable payment.</p>
+          <p id="prequal-hint" class="hint" role="status">Complete the free scan and check all boxes to enable payment.</p>
 
           <div class="cta-row">
             <a
@@ -433,7 +523,8 @@
             >
           </div>
           <p class="checkout__next">
-            Pay → <a href="#intake">paste your listing link below</a> (~10 seconds, same page).
+            After pay: your kit is generated automatically — brochure + report in <strong>~90 seconds</strong> to your
+            Stripe receipt email.
           </p>
           <p id="prequal-stripe-hint" class="hint hint--stripe" role="status" hidden>
             Secure checkout is being connected. Questions? Email
@@ -442,64 +533,48 @@
         </div>
       </section>
 
-      <section id="intake" class="section section--soft intake" aria-labelledby="intake-heading">
-        <div class="wrap">
-          <h2 class="section__title" id="intake-heading">One thing we need from you</h2>
-          <p class="section__intro section__intro--tight">
-            We use your <strong>receipt email from Stripe</strong> — no email field here. Paste your
-            <strong>Google Maps listing link</strong> or <strong>business name + city</strong>. We generate your kit from
-            your listing; you never write marketing copy.
-          </p>
-          <p class="intake__support">
-            <strong>Support / questions:</strong>
-            <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>
-          </p>
-          <form id="listing-intake-form" class="intake-capture" novalidate>
-            <label class="intake-capture__label" for="listing-id">Google Maps listing link or business name + city</label>
-            <div class="intake-capture__row">
-              <input
-                id="listing-id"
-                class="intake-capture__input"
-                type="text"
-                name="listing_identifier"
-                autocomplete="url"
-                placeholder="https://maps.google.com/… or Acme Plumbing, Denver"
-                required
-              />
-              <button type="submit" class="btn btn--primary intake-capture__submit">Submit</button>
-            </div>
-            <p class="intake-capture__hint">Opens a one-question confirmation (~10 seconds). No prose required.</p>
-          </form>
-        </div>
-      </section>
-
       <section class="section section--soft" aria-labelledby="faq-heading">
         <div class="wrap">
           <h2 class="section__title" id="faq-heading">FAQ</h2>
           <dl class="faq">
             <div class="faq__row">
-              <dt>Why pay first?</dt>
-              <dd>Fixed price, fast delivery — no sales pitch and no interruptions; the whole process stays in email.</dd>
+              <dt>Why scan before you pay?</dt>
+              <dd>
+                You see your listing score and top issues free — then decide if the full $129.99 kit is worth it. No
+                sales call.
+              </dd>
             </div>
             <div class="faq__row">
-              <dt>Need a website?</dt>
-              <dd>Helpful, not required — Google listing only.</dd>
+              <dt>What if my Maps link doesn’t work?</dt>
+              <dd>
+                <strong>Link guarantee:</strong> if we can’t read your Google Maps listing, you’re not charged — automatic
+                refund.
+              </dd>
             </div>
             <div class="faq__row">
-              <dt>Your time?</dt>
-              <dd>~10 seconds after pay to paste your listing link or name + city; then copy-and-paste steps whenever your kit arrives.</dd>
+              <dt>Why ~90 seconds?</dt>
+              <dd>
+                After payment your listing is scanned automatically — brochure and report are generated and emailed fast.
+                You paste the updates yourself on your schedule.
+              </dd>
             </div>
             <div class="faq__row">
-              <dt>Why 48 hours?</dt>
-              <dd>Automated research + spot-check before send — you still apply every update.</dd>
+              <dt>Is this a website audit?</dt>
+              <dd>
+                No — Google Maps / Business Profile only. No website rebuild, ads, or monthly SEO. A website helps but
+                isn’t required.
+              </dd>
+            </div>
+            <div class="faq__row">
+              <dt>Do you need my Google password?</dt>
+              <dd>
+                No — your Google account stays yours. You sign in to your own listing and paste what we send; no passwords
+                or manager invites.
+              </dd>
             </div>
             <div class="faq__row">
               <dt>Phone support?</dt>
               <dd>Everything is in email and your kit — work on your own time with no scheduled calls.</dd>
-            </div>
-            <div class="faq__row">
-              <dt>Do you need my Google password?</dt>
-              <dd>No — your Google account stays yours. You sign in to your own listing and paste what we send; no passwords or manager invites needed.</dd>
             </div>
           </dl>
         </div>
@@ -510,7 +585,7 @@
       <div class="wrap">
         <p class="site-footer__legal">
           Not affiliated with Google. Google Business Profile is a trademark of Google LLC. ©
-          <span id="y"></span> · service by email — on your schedule
+          <span id="y"></span> · service by email — kit in ~90 seconds after pay
         </p>
       </div>
     </footer>
@@ -518,13 +593,13 @@
     <aside
       class="sticky-bar"
       id="sticky-bar"
-      aria-label="Quick checkout: one-time fee $129.99, delivery in 48 hours"
+      aria-label="Quick checkout: one-time fee $129.99, delivery in about 90 seconds"
       hidden
     >
       <div class="sticky-bar__inner">
         <div class="sticky-bar__text">
-          <p class="sticky-bar__price"><span>$129.99</span> · 48 hours</p>
-          <p class="sticky-bar__note">One-time fee</p>
+          <p class="sticky-bar__price"><span>$129.99</span> · ~90 sec</p>
+          <p class="sticky-bar__note">One-time · link guarantee</p>
         </div>
         <a
           id="pay-cta-sticky"
@@ -533,7 +608,7 @@
           aria-disabled="true"
           tabindex="-1"
           aria-label="Get my kit — one-time fee $129.99"
-          >Get my kit — $129.99</a
+          >Get my kit</a
         >
       </div>
     </aside>

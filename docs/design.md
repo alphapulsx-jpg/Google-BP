@@ -14,7 +14,7 @@
 
 ## Offer (fixed scope)
 
-- **Name:** $129.99 Google Business Profile DIY kit — **printable brochure + written report**, **delivered in 48 hours** (after short post-pay form)
+- **Name:** $129.99 Google Business Profile DIY kit — **printable brochure + written report**, **delivered in ~90 seconds** (after free scan + pay; automated AI scan)
 
 - **ICP:** **[Trade]** owners in **[City/region]**, **small to medium businesses under 100 employees**, already serving customers, **weak GBP** (thin profile) OR strong offline signals but **missing/duplicated GBP** (handled cautiously in scoring).
 
@@ -34,11 +34,13 @@
 
 ## SLA
 
-- **Customer-facing promise:** **48 hours** from completed short form → brochure/export + numbered Google Doc instructions by email.
+- **Customer-facing promise:** **~90 seconds** from successful payment + valid listing identifier → brochure/export + report by email (automated scan).
 
-- **Customer time upfront:** **~5 minutes** after pay (short form only). Copy-paste steps are optional and on their schedule.
+- **Link guarantee:** if the Maps listing link cannot be read, customer is **not charged** (automatic refund).
 
-- **Internal ops:** Kits are **agent-generated** (research + draft) with **optional human spot-check** before send; target same **48h** window.
+- **Customer time upfront:** **~10 seconds** for free scan (paste link or name + city); copy-paste steps are on their schedule after delivery.
+
+- **Internal ops:** Kits are **agent-generated** from listing snapshot; **optional human spot-check** before send if approval gate enabled; automation target **~90s** after valid payment.
 
 - **Your responses:** **[e.g. Tue/Thu 6–7pm + Sun]** email only; no calls.
 
@@ -66,7 +68,7 @@
 
 - Landing: visits → payment
 
-- Ops: paid → info received → report delivered (≤ 48h)
+- Ops: scan → paid → valid listing → report delivered (~90s automated)
 
 - Growth: leads/week, message reply rate, **pay rate**
 

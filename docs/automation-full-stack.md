@@ -23,8 +23,9 @@ The Script’s `doPost` handler:
 1. Reads the **raw body** and the **`Stripe-Signature`** header.
 2. **Verifies the webhook signature** using your **signing secret** (whsec_…) so only Stripe can trigger your logic. Store that secret in **Script Properties**, never in this git repo.
 3. Parses the JSON and checks **`type`** (e.g. `checkout.session.completed`).
-4. Extracts **`session.id`**, **`customer_email`** (authoritative — from `customer_details.email` or `customer_email` only; **never** from the Form), and **paid** time.
-5. **Appends one row** to a **Google Sheet** (your “order log”), for example:
+4. Extracts **`session.id`**, **`customer_email`** (authoritative — from `customer_details.email` or `customer_email` only; **never** from the Form), **`listing_identifier`** (metadata / Form merge), and **paid** time.
+5. Runs **`validateListingIdentifier_`** — if missing/invalid, **refund** and set **`INVALID_LISTING`** (see [Listing URL validation & link guarantee](#listing-url-validation--link-guarantee)).
+6. **Appends one row** to a **Google Sheet** (your “order log”), for example:
 
    | session_id | customer_email | listing_identifier | status | doc_url | approved | sent | notes |
    |------------|----------------|--------------------|--------|---------|----------|------|-------|
@@ -41,11 +42,28 @@ The Script’s `doPost` handler:
 
 ### Where `listing_identifier` comes from (pick one primary path)
 
-1. **Preferred (MVP):** Stripe webhook creates the row with **`session_id`** + **`customer_email`**; customer submits the **1-question Form** with **`listing_identifier`** + prefilled **`session_id`**; Apps Script (or manual Sheet edit) **merges** Form response into the same row when **`session_id`** matches.
-2. **Later:** Stripe Checkout **custom field** or **metadata** on Payment Link — webhook sets **`listing_identifier`** without Form (still keep Form as backup).
-3. **Optional:** Second webhook / Form trigger (`onFormSubmit`) calls **`mergeFormResponseBySessionId_`** — see **`automation/Code.gs`** stubs.
+1. **Preferred (MVP):** Free scan on landing stores **`listing_identifier`** in session; pass via Stripe Checkout **metadata** on pay. Webhook row gets **`session_id`** + **`customer_email`** + **`listing_identifier`**.
+2. **Backup:** customer submits **1-question Form** with **`listing_identifier`** + **`session_id`**; **`mergeFormResponseBySessionId_`** merges into the paid row.
+3. **Optional:** Form trigger (`onFormSubmit`) — see **`automation/Code.gs`** stubs.
 
 **AI:** All customer-facing copy in the kit is generated from the listing snapshot + **`listing_identifier`** — the customer never writes prose in intake.
+
+### Listing URL validation & link guarantee
+
+**Customer-facing promise (landing page):** if we cannot read their Google Maps listing from the link they provide, they are **not charged** — automatic refund (**link guarantee**).
+
+**Implement in Apps Script before generation and on every paid order:**
+
+1. **`validateListingIdentifier_(value)`** — accept only:
+   - URLs containing `maps.google.com`, `google.com/maps`, `goo.gl/maps`, or `maps.app.goo.gl`, **or**
+   - `business name, city` (comma-separated, minimum length — mirror `app.js` `validateListingInput`).
+2. **On `checkout.session.completed`:**
+   - Read **`listing_identifier`** from session metadata / Payment Link custom field / merged Form row.
+   - If **missing or invalid** → do **not** start kit generation; set Sheet **`status`** to e.g. `INVALID_LISTING` and call **`refundCheckoutSession_(sessionId)`** (Stripe API) so the customer is not charged for an unreadable link.
+   - If **valid** → set **`status`** to `NEEDS_GENERATION` (or proceed to Doc creation).
+3. **Optional pre-charge check:** if you add a server-side “preview” endpoint later, run the same validator before creating the Checkout Session; the webhook refund remains the safety net.
+
+**Delivery SLA after valid payment + identifier:** target **~90 seconds** from `checkout.session.completed` with a valid listing to customer email (automated scan → Doc/PDF → send). Owner approval gate (Flow A) can add human delay — default automation path should still aim for ~90s when `Approved` is auto-enabled or bypassed for MVP.
 
 ### Step 3 — Create the Google Doc from a template
 
@@ -139,19 +157,17 @@ Zapier is a valid alternative if you prefer no code.
 
 ---
 
-## Customer UX: redirect + one field + Form prefill
+## Customer UX: free scan → pay → ~90s delivery
 
-1. **Stripe Payment Link — success URL:**  
-   `https://alphapulsx-jpg.github.io/Google-BP/?session_id={CHECKOUT_SESSION_ID}#intake`  
-   Stripe replaces `{CHECKOUT_SESSION_ID}` after checkout. The hash **`#intake`** scrolls to the capture block (`app.js`).
+1. **Landing hero (`index.html`):** customer pastes **Google Maps link** or **business name, city** → **Scan free** (`#scan-form`, `app.js` `initScanForm()`). Results in **`#scan-results`** (mock scores on static site; real scores in production backend). Listing stored in **`sessionStorage.listing_identifier`** + **`scan_completed`**.
 
-2. **Landing page (`index.html`):** **`#intake`** has one on-page **`<input id="listing-id">`** + **Submit**. No long Form iframe. **`app.js`** opens a prefilled 1-question Google Form in a new tab:  
-   `https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?entry.YOUR_ENTRY_ID=` + value  
-   (+ optional `entry.YOUR_SESSION_ENTRY_ID=` from `?session_id=` in the URL). Replace placeholders in **`app.js`**.
+2. **Checkout (`#pricing` → `#checkout`):** pay CTA enabled only when **free scan completed** + all prequal checkboxes + Stripe URL configured. Hidden **`#listing-id`** synced from sessionStorage for post-pay / metadata handoff.
 
-3. **Trust model:** **`session_id` in the URL does not prove payment** (bookmarkable). **Proof of payment** = Stripe webhook row. **`session_id`** is only for **matching** Form submit → Sheet row.
+3. **Stripe Payment Link — success URL (optional):**  
+   `https://alphapulsx-jpg.github.io/Google-BP/?session_id={CHECKOUT_SESSION_ID}#checkout`  
+   Stripe replaces `{CHECKOUT_SESSION_ID}`. **`session_id` does not prove payment** — webhook does. Use **`listing_identifier`** from scan metadata or Form merge.
 
-4. **Webhook + Form merge:** Webhook row has **`customer_email`** + **`session_id`**. Form submit adds **`listing_identifier`** (and repeats **`session_id`**). **`mergeFormResponseBySessionId_`** in Apps Script updates the existing row — do not create duplicate rows per Form response unless you intend a separate responses tab.
+4. **Webhook + Form merge (backup):** if metadata is empty, Form submit with **`session_id`** + **`listing_identifier`** merges into the Sheet row via **`mergeFormResponseBySessionId_`**. Run **`validateListingIdentifier_`** on merge; refund if still invalid.
 
 ---
 
