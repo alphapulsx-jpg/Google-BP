@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Free Google Maps listing scan. Full kit in ~90 seconds. $129.99 one-time. Not charged if we can't read your listing link."
+      content="Every minute your Google listing stays unchanged, you miss local calls. Free scan in 60 seconds. Full fix kit in ~90 seconds — $129.99 once."
     />
-    <title>Google listing kit · free scan · $129.99 one-time</title>
+    <title>Stop losing Google calls · free scan · $129.99</title>
     <link rel="canonical" href="https://alphapulsx-jpg.github.io/Google-BP/" />
     <meta property="og:title" content="Google listing kit · free scan · $129.99" />
     <meta
       property="og:description"
-      content="Paste your Maps link — free scan. Full brochure + paste-ready report in ~90 seconds. One-time $129.99. Not charged if we can't read your link."
+      content="Every minute your Google listing stays unchanged, you miss local calls. Free scan in 60 seconds. Fix kit in ~90 seconds — $129.99 once."
     />
     <meta property="og:url" content="https://alphapulsx-jpg.github.io/Google-BP/" />
     <meta property="og:type" content="website" />
@@ -116,10 +116,13 @@
     <header class="hero">
       <div class="wrap hero__inner">
         <p class="hero__eyebrow">Google listing kit</p>
-        <h1 id="main">Your Google listing is costing you calls — fix it without an agency</h1>
+        <h1 id="main">Every minute your listing stays the same, you’re losing business</h1>
         <p class="hero__lede">
-          Paste your Maps link for a <strong>free scan</strong>. See your score and top issues — then get the full
-          brochure + paste-ready report in <strong>~90 seconds</strong> after you pay.
+          Competitors on Maps get the call while yours sits broken. Paste your link — <strong>free score in 60 seconds</strong>.
+          Pay <strong>$129.99 once</strong> — paste-ready fix kit in <strong>~90 seconds</strong>. No subscription. No sales call.
+        </p>
+        <p class="hero__urgency" role="status">
+          Right now: shoppers search your trade → your weak listing → they tap the next business.
         </p>
 
         <form id="scan-form" class="scan-form" novalidate>
@@ -131,37 +134,32 @@
               type="text"
               name="listing_identifier"
               autocomplete="url"
-              placeholder="https://maps.google.com/… or Acme Plumbing, Denver"
+              placeholder="Paste Maps share link"
+              title="Google Maps → your business → Share → copy link"
               required
             />
             <button type="submit" class="btn btn--primary scan-form__submit" id="scan-submit">
-              Scan free
+              Show what I’m losing →
             </button>
           </div>
-          <p id="scan-error" class="scan-form__error" role="alert" hidden>
-            Paste a Google Maps link (maps.google.com, google.com/maps, or goo.gl/maps) or business name + city (comma,
-            at least 8 characters).
+          <ol class="scan-microsteps" aria-label="How to get your link">
+            <li><span>1</span> Google Maps</li>
+            <li><span>2</span> Your business</li>
+            <li><span>3</span> Share → Copy link</li>
+          </ol>
+          <p class="scan-form__altline">
+            No link? Type <button type="button" class="scan-form__altlink" id="scan-fill-example">Business name, City</button>
+            (e.g. Summit Plumbing, Denver)
           </p>
-          <p class="scan-form__hint">No account needed · results on this page · ~2 seconds</p>
+          <p id="scan-error" class="scan-form__error" role="alert" hidden></p>
+          <p id="scan-fix" class="scan-form__fix" hidden>
+            <button type="button" class="scan-form__fix-btn" id="scan-use-suggested"></button>
+          </p>
         </form>
 
         <p class="hero__guarantee">
-          <strong>Link guarantee:</strong> if we can’t read your Google Maps listing, you’re
-          <strong>not charged</strong> — automatic refund.
+          Wrong Maps link? <strong>You’re not charged.</strong> Google Maps only — fix it today, not “someday.”
         </p>
-
-        <p class="hero__price">
-          <span class="hero__price-amount">$129.99</span>
-          <span class="hero__price-sep">/</span>
-          <span class="hero__price-term">one-time · full kit in ~90 seconds after pay</span>
-        </p>
-
-        <ul class="hero__trust" aria-label="Why this works">
-          <li>Real listing scoring — not generic SEO fluff</li>
-          <li>Pay once — no subscription, no sales calls</li>
-          <li>Link guarantee — not charged if we can’t read your Maps link</li>
-        </ul>
-        <p class="hero__legal">DIY guidance only — no ranking or call guarantees.</p>
       </div>
     </header>
 
@@ -173,15 +171,15 @@
         hidden
       >
         <div class="wrap">
-          <p class="section__kicker">Free scan results</p>
-          <h2 class="section__title" id="scan-results-heading">Your listing snapshot</h2>
-          <p class="section__intro section__intro--tight">
-            Sample scoring from your input — your paid kit uses a full automated scan of the same listing.
+          <p class="section__kicker">Free scan — still costing you calls</p>
+          <h2 class="section__title" id="scan-results-heading">Here’s why you’re losing jobs on Maps</h2>
+          <p id="scan-urgency-clock" class="scan-urgency" role="status" aria-live="polite"></p>
+          <p class="scan-results__note">
+            Score = <strong>profile completeness</strong> (services, posts, Q&amp;A)—not your star rating.
           </p>
-
-          <div class="scan-score" aria-label="Listing health score">
+          <div class="scan-score" aria-label="Profile completeness score">
             <div class="scan-score__col scan-score__col--before">
-              <span class="scan-score__label">Today</span>
+              <span class="scan-score__label">Completeness today</span>
               <span class="scan-score__value" id="scan-score-before">—</span>
               <span class="scan-score__unit">/ 100</span>
             </div>
@@ -193,16 +191,18 @@
             </div>
           </div>
 
-          <h3 class="section__subhead">Top 3 issues holding you back</h3>
+          <h3 class="section__subhead">Top 3 leaks — every minute these stay, competitors win</h3>
           <ol class="list list--ordered scan-issues" id="scan-issues-list"></ol>
 
-          <p class="scan-results__cta-note">
-            <a class="btn btn--primary" href="#pricing">Get full kit — $129.99</a>
-          </p>
+          <div class="scan-results__pay">
+            <p class="scan-results__price"><span>$129.99</span> once · stop the bleed in ~90 seconds</p>
+            <a class="btn btn--primary btn--lg" href="#checkout" id="scan-results-pay">Stop losing calls — fix now →</a>
+            <p class="scan-results__fine">Every minute you wait, another customer picks someone else on Maps.</p>
+          </div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="pillars-heading">
+      <section class="section" aria-labelledby="pillars-heading" hidden>
         <div class="wrap">
           <p class="section__kicker">Why us</p>
           <h2 class="section__title" id="pillars-heading">Built for local trades, not agencies</h2>
@@ -231,7 +231,7 @@
         </div>
       </section>
 
-      <section class="section section--soft" aria-labelledby="how-heading">
+      <section class="section section--soft" aria-labelledby="how-heading" hidden>
         <div class="wrap">
           <p class="section__kicker">How it works</p>
           <h2 class="section__title" id="how-heading">Three steps · ~90 seconds automated</h2>
@@ -255,7 +255,7 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="dimensions-heading">
+      <section class="section" aria-labelledby="dimensions-heading" hidden>
         <div class="wrap">
           <p class="section__kicker">What we score</p>
           <h2 class="section__title" id="dimensions-heading">8 dimensions for your Google listing</h2>
@@ -272,7 +272,7 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="fit-heading">
+      <section class="section" aria-labelledby="fit-heading" hidden>
         <div class="wrap">
           <h2 class="section__title" id="fit-heading">Good fit?</h2>
           <div class="fit-grid">
@@ -296,7 +296,7 @@
         </div>
       </section>
 
-      <section class="section section--soft" aria-labelledby="deliver-heading">
+      <section class="section section--soft" aria-labelledby="deliver-heading" hidden>
         <div class="wrap">
           <h2 class="section__title" id="deliver-heading">What you get</h2>
           <ol class="deliver-list">
@@ -312,14 +312,9 @@
         </div>
       </section>
 
-      <section class="section section--brochure" aria-labelledby="example-heading">
+      <section class="section section--brochure" aria-labelledby="example-heading" hidden>
         <div class="wrap">
-          <h2 class="section__title" id="example-heading">Sample brochure &amp; report</h2>
-          <p class="section__intro">
-            Fictional client preview — yours matches your business and shows the edits
-            <strong>your report teaches you to apply</strong>.
-          </p>
-
+          <h2 class="section__title" id="example-heading">Sample kit</h2>
           <article class="brochure-preview" aria-label="Sample — Summit Ridge Heating and Cooling">
             <header class="brochure-cover">
               <div class="brochure-cover__band">
@@ -451,7 +446,7 @@
         </div>
       </section>
 
-      <section class="section section--soft" id="pricing" aria-labelledby="pricing-heading">
+      <section class="section section--soft" id="pricing" aria-labelledby="pricing-heading" hidden>
         <div class="wrap">
           <p class="section__kicker">Pricing</p>
           <h2 class="section__title" id="pricing-heading">One price · full kit</h2>
@@ -474,41 +469,35 @@
         </div>
       </section>
 
-      <section class="section" id="checkout" aria-labelledby="checkout-heading">
+      <section class="section" id="checkout" aria-labelledby="checkout-heading" hidden>
         <div class="wrap">
-          <h2 class="section__title" id="checkout-heading">Checkout</h2>
+          <h2 class="section__title" id="checkout-heading">Get your fix kit — in your inbox in ~90 seconds</h2>
+          <p class="checkout__price-line"><span class="checkout__amount">$129.99</span> one-time · no subscription</p>
+          <p class="checkout__policy">
+            <strong>Link guarantee:</strong> wrong Maps link = not charged.
+            Kit delivered by email after payment (automated when live).
+          </p>
 
           <p id="checkout-listing-summary" class="checkout-listing" hidden>
-            Listing from scan: <strong id="checkout-listing-value"></strong>
+            Your listing: <strong id="checkout-listing-value"></strong>
           </p>
           <input type="hidden" id="listing-id" name="listing_identifier" value="" />
 
-          <h3 class="section__subhead" id="confirm-heading">Confirm (required)</h3>
-          <form id="prequal-form" class="prequal" novalidate>
+          <form id="prequal-form" class="prequal prequal--compact" novalidate>
             <fieldset>
               <legend class="visually-hidden">Checkout confirmations</legend>
               <label class="check">
                 <input type="checkbox" name="prequal" value="scan" id="prequal-scan" />
-                <span
-                  >I completed the <strong>free scan</strong> for my Google Maps listing (or business name +
-                  city).</span
-                >
-              </label>
-              <label class="check">
-                <input type="checkbox" name="prequal" value="diy" />
-                <span
-                  >I will <strong>apply the changes myself</strong> (or my team will) using your copy-paste
-                  steps.</span
-                >
+                <span>I ran the <strong>free scan</strong> above for my listing.</span>
               </label>
               <label class="check">
                 <input type="checkbox" name="prequal" value="scope" />
-                <span>Guided <strong>DIY listing work only</strong> — no ranking guarantees.</span>
+                <span>DIY Google listing fixes only — <strong>no ranking guarantees</strong>.</span>
               </label>
             </fieldset>
           </form>
 
-          <p id="prequal-hint" class="hint" role="status">Complete the free scan and check all boxes to enable payment.</p>
+          <p id="prequal-hint" class="hint" role="status">Run the free scan first — then check both boxes.</p>
 
           <div class="cta-row">
             <a
@@ -519,21 +508,19 @@
               aria-disabled="true"
               tabindex="-1"
               aria-label="Get my kit — one-time fee $129.99"
-              >Get my kit — $129.99</a
+              >Pay $129.99 — stop losing calls →</a
             >
           </div>
-          <p class="checkout__next">
-            After pay: your kit is generated automatically — brochure + report in <strong>~90 seconds</strong> to your
-            Stripe receipt email.
-          </p>
+          <p class="checkout__next">Pay now — kit in <strong>~90 seconds</strong>. Paste tonight. Tomorrow’s searches stop going to the guy above you on Maps.</p>
           <p id="prequal-stripe-hint" class="hint hint--stripe" role="status" hidden>
-            Secure checkout is being connected. Questions? Email
-            <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>.
+            Checkout is not live yet — email
+            <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>
+            to pay manually, or connect Stripe on <code>#pay-cta</code> (<code>data-stripe-url</code>).
           </p>
         </div>
       </section>
 
-      <section class="section section--soft" aria-labelledby="faq-heading">
+      <section class="section section--soft" aria-labelledby="faq-heading" hidden>
         <div class="wrap">
           <h2 class="section__title" id="faq-heading">FAQ</h2>
           <dl class="faq">
@@ -587,6 +574,9 @@
           Not affiliated with Google. Google Business Profile is a trademark of Google LLC. ©
           <span id="y"></span> · service by email — kit in ~90 seconds after pay
         </p>
+        <p class="site-footer__demo">
+          <a href="sample-triumph-report.html">Example deliverable</a> (sample business — not your order)
+        </p>
       </div>
     </footer>
 
@@ -599,7 +589,7 @@
       <div class="sticky-bar__inner">
         <div class="sticky-bar__text">
           <p class="sticky-bar__price"><span>$129.99</span> · ~90 sec</p>
-          <p class="sticky-bar__note">One-time · link guarantee</p>
+          <p class="sticky-bar__note">Every minute = missed jobs</p>
         </div>
         <a
           id="pay-cta-sticky"
@@ -608,7 +598,7 @@
           aria-disabled="true"
           tabindex="-1"
           aria-label="Get my kit — one-time fee $129.99"
-          >Get my kit</a
+          >Fix now $129.99 →</a
         >
       </div>
     </aside>

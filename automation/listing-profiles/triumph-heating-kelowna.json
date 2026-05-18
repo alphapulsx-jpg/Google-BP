@@ -1,0 +1,94 @@
+{
+  "listing_identifier": "https://www.google.com/maps/place/Triumph+Heating+%26+Air+Conditioning/@49.8657222,-119.574708,17z/data=!3m1!4b1!4m6!3m5!1s0x537df52ca595ef6d:0xc57d9390b5e75dbe!8m2!3d49.8657222!4d-119.5721331!16s%2Fg%2F11b5pjf9q5",
+  "place_id_hint": "ChIJ.../g/11b5pjf9q5",
+  "business_name": "Triumph Heating & Air Conditioning",
+  "short_name": "Triumph Heating",
+  "city_region": "West Kelowna, BC · Central Okanagan",
+  "address": "#7 - 1385 Stevens Road, West Kelowna, BC V1Z 2S9",
+  "phone_primary": "250-870-6567",
+  "phone_secondary": "250-870-9188",
+  "website": "https://www.triumphheatandair.com",
+  "booking_url": "https://www.triumphheatandair.com/schedule-service",
+  "since_year": 2013,
+  "credentials": [
+    "Licensed, bonded & insured (BC)",
+    "Bryant Factory Authorized Dealer",
+    "NATE-certified technicians",
+    "Gas Licence No. LGA0201999",
+    "5-year labour & 10-year parts warranty on new installs"
+  ],
+  "hours_regular": "Monday–Friday 7:30 a.m. – 4:30 p.m.",
+  "hours_display": "Mon–Fri 7:30 a.m. – 4:30 p.m.",
+  "hours_emergency": "24/7 emergency HVAC service",
+  "service_areas": [
+    "Kelowna",
+    "West Kelowna",
+    "Peachland",
+    "Lake Country",
+    "Penticton area (confirm coverage)",
+    "Central Okanagan"
+  ],
+  "services_primary": [
+    "Furnace repair & installation",
+    "Air conditioning repair & installation",
+    "Heat pump installation & service",
+    "Ductless mini-split systems",
+    "Hot water tank repair & installation",
+    "Indoor air quality",
+    "In-floor heating",
+    "Commercial HVAC",
+    "Thermostat installation",
+    "Gas line services",
+    "Annual maintenance & VIP membership"
+  ],
+  "public_signals": {
+    "rating_estimate": "4.9+",
+    "review_count_estimate": "500+ Google reviews",
+    "strengths": [
+      "Very high review volume and rating",
+      "Clear brand site with scheduling & financing",
+      "Strong local trust signals (family-owned since 2013)"
+    ]
+  },
+  "scan_before": {
+    "score": 74,
+    "services_listed": 6,
+    "photos_estimate": 18,
+    "profile_completeness_pct": 72,
+    "qa_answered": 2,
+    "posts_last_90_days": 1
+  },
+  "scan_after": {
+    "score": 92,
+    "services_listed": 12,
+    "photos_estimate": 28,
+    "profile_completeness_pct": 96,
+    "qa_answered": 8,
+    "posts_last_90_days": 5
+  },
+  "issues_ranked": [
+    {
+      "title": "Primary category & services keywords",
+      "why": "HVAC searches are split (furnace repair, AC install, heat pump rebate). Thin or generic services let map-pack rivals capture high-intent clicks.",
+      "where": "Google Business Profile → Edit profile → Business category → Services"
+    },
+    {
+      "title": "Business description & attributes",
+      "why": "Shoppers decide in seconds. Missing Bryant dealer, gas licence, 24/7 emergency, and financing in the first screen loses trust to competitors who spell it out.",
+      "where": "Edit profile → Business information → Description · Attributes"
+    },
+    {
+      "title": "Q&A, posts & review replies",
+      "why": "Unanswered “same-day?” and “licensed?” questions plus stale posts signal an inactive profile — Google and customers deprioritize you even with strong stars.",
+      "where": "Profile → Q&A · Posts · Reviews → Reply"
+    }
+  ],
+  "competitor_note": "Central Okanagan HVAC is crowded. Your review volume is a moat — pair it with complete services, suburb keywords, and weekly posts to defend map visibility.",
+  "data_sources": [
+    "Google Maps listing URL (customer provided)",
+    "Public website triumphheatandair.com/kelowna",
+    "Public directory listings (hours, address, phone)"
+  ],
+  "generated_for_demo": true,
+  "session_id_demo": "cs_demo_triumph_20260516"
+}

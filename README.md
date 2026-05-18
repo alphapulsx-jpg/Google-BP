@@ -1,5 +1,7 @@
 # Google-BP
 
+**Your checklist:** [`docs/TODO.md`](docs/TODO.md)
+
 Google Business Page Business — repo specs live in `docs/`. This repository includes a **static landing page** at the root for the **$129.99** DIY Google Business Profile kit (printable brochure + written report; customer applies changes).
 
 ## GitHub Pages

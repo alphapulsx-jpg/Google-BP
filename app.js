@@ -3,6 +3,9 @@
 
   var STORAGE_LISTING = "listing_identifier";
   var STORAGE_SCAN_OK = "scan_completed";
+  var STORAGE_SCAN_AT = "scan_completed_at";
+
+  var urgencyTimerId = null;
 
   var y = document.getElementById("y");
   if (y) {
@@ -28,6 +31,55 @@
     );
   }
 
+  function isOtherMapsUrl(value) {
+    var v = value.toLowerCase();
+    return (
+      v.indexOf("bing.com/maps") !== -1 ||
+      v.indexOf("apple.com/maps") !== -1 ||
+      v.indexOf("mapquest.com") !== -1
+    );
+  }
+
+  /** Turn "triumph+heating+kelowna" or "triumph heating kelowna" into "Triumph Heating, Kelowna" when possible */
+  function suggestNameCityFromQuery(query) {
+    var raw = decodeURIComponent(String(query || "").replace(/\+/g, " "));
+    raw = raw.trim();
+    if (!raw || raw.length < 4) return "";
+
+    var parts = raw.split(/\s+/).filter(Boolean);
+    if (parts.length < 2) return "";
+
+    var city = parts[parts.length - 1];
+    var nameParts = parts.slice(0, -1);
+    if (nameParts.length < 1) return "";
+
+    function titleWord(w) {
+      if (!w) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    }
+
+    var name = nameParts.map(titleWord).join(" ");
+    city = titleWord(city);
+    return name + ", " + city;
+  }
+
+  function extractNameCitySuggestion(value) {
+    var trimmed = String(value || "").trim();
+    if (!/^https?:\/\//i.test(trimmed)) return "";
+
+    try {
+      var url = new URL(trimmed);
+      var q = url.searchParams.get("q");
+      if (q) {
+        var fromQ = suggestNameCityFromQuery(q);
+        if (fromQ && isValidNameCity(fromQ)) return fromQ;
+      }
+    } catch (e) {
+      /* ignore */
+    }
+    return "";
+  }
+
   function isValidNameCity(value) {
     if (value.indexOf(",") === -1) return false;
     var parts = value.split(",");
@@ -47,14 +99,14 @@
   }
 
   var ISSUE_POOL = [
-    "Wrong primary category — you show up for the wrong searches (e.g. “general contractor” instead of your trade).",
-    "Thin services list — missing emergency, financing, or suburb keywords customers actually search.",
-    "Too few photos — competitors with 15+ job-site shots win the map pack click.",
-    "Short or generic description — no license, years in business, or service area in the first line.",
-    "No Q&A answered — “Are you licensed?” and “Same-day?” left blank while rivals answer first.",
-    "Stale Google posts — last update months ago; profile looks inactive to Google and shoppers.",
-    "Review replies missing — unanswered 3★ reviews hurt trust more than the rating itself.",
-    "Hours or attributes incomplete — after-hours and “online estimates” toggles not set.",
+    "Wrong category — every minute you show up for the wrong search, the right customer calls your competitor.",
+    "Thin services list — emergency & suburb keywords missing; those searches skip you entirely.",
+    "Too few photos — rivals with full galleries steal the map click while your listing looks dead.",
+    "Weak description — no license, area, or urgency in line one; shoppers bounce in seconds.",
+    "Blank Q&A — “Licensed?” “Same-day?” unanswered; they call the business that already answered.",
+    "Stale posts — inactive profile signals “might be closed”; Google and buyers move on.",
+    "Unanswered reviews — silence on 3★ stars costs more trust than the rating number.",
+    "Incomplete hours/attributes — after-hours jobs and “online estimates” go to whoever has them on.",
   ];
 
   function pickIssues(seed, count) {
@@ -64,6 +116,59 @@
       issues.push(ISSUE_POOL[(start + i) % ISSUE_POOL.length]);
     }
     return issues;
+  }
+
+  function setScanStartedAt() {
+    try {
+      sessionStorage.setItem(STORAGE_SCAN_AT, String(Date.now()));
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function getScanStartedAt() {
+    try {
+      var raw = sessionStorage.getItem(STORAGE_SCAN_AT);
+      var n = raw ? parseInt(raw, 10) : 0;
+      return isNaN(n) ? 0 : n;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function formatUrgencyMessage(minutes) {
+    if (minutes < 1) {
+      return "This minute: your listing is unchanged — local shoppers are tapping your competitor on Maps.";
+    }
+    if (minutes === 1) {
+      return "1 minute since your scan — still unchanged. That’s another minute of calls going elsewhere.";
+    }
+    return (
+      String(minutes) +
+      " minutes since your scan — listing still unchanged. Every minute = missed local jobs."
+    );
+  }
+
+  function updateUrgencyClock() {
+    var el = document.getElementById("scan-urgency-clock");
+    if (!el || !getScanCompleted()) return;
+
+    var started = getScanStartedAt();
+    if (!started) {
+      el.textContent = formatUrgencyMessage(0);
+      return;
+    }
+
+    var minutes = Math.floor((Date.now() - started) / 60000);
+    el.textContent = formatUrgencyMessage(minutes);
+  }
+
+  function startUrgencyClock() {
+    updateUrgencyClock();
+    if (urgencyTimerId) {
+      window.clearInterval(urgencyTimerId);
+    }
+    urgencyTimerId = window.setInterval(updateUrgencyClock, 15000);
   }
 
   function getScanCompleted() {
@@ -112,10 +217,16 @@
     }
   }
 
+  function isLikelyStrongListing(input) {
+    var v = String(input || "").toLowerCase();
+    return v.indexOf("triumph") !== -1 || v.indexOf("maps.google") !== -1 || v.indexOf("google.com/maps") !== -1;
+  }
+
   function renderScanResults(input) {
     var seed = hashString(input.toLowerCase());
-    var before = 52 + (seed % 17);
-    var after = 85 + (seed % 10);
+    var strong = isLikelyStrongListing(input);
+    var before = strong ? 70 + (seed % 6) : 58 + (seed % 14);
+    var after = strong ? 90 + (seed % 4) : 86 + (seed % 8);
     var beforeEl = document.getElementById("scan-score-before");
     var afterEl = document.getElementById("scan-score-after");
     var issuesList = document.getElementById("scan-issues-list");
@@ -136,6 +247,21 @@
 
     if (resultsSection) {
       resultsSection.hidden = false;
+    }
+
+    setCheckoutVisible(true);
+
+    if (typeof window.__showStickyCheckout === "function") {
+      window.__showStickyCheckout();
+    }
+
+    startUrgencyClock();
+  }
+
+  function setCheckoutVisible(show) {
+    var checkoutSection = document.getElementById("checkout");
+    if (checkoutSection) {
+      checkoutSection.hidden = !show;
     }
   }
 
@@ -158,13 +284,40 @@
     var scanForm = document.getElementById("scan-form");
     var scanInput = document.getElementById("scan-input");
     var scanError = document.getElementById("scan-error");
+    var scanFix = document.getElementById("scan-fix");
+    var scanUseSuggested = document.getElementById("scan-use-suggested");
     var scanSubmit = document.getElementById("scan-submit");
+    var pendingSuggestion = "";
     if (!scanForm || !scanInput) return;
 
-    function showError(show) {
-      if (scanError) scanError.hidden = !show;
-      if (show) scanInput.setAttribute("aria-invalid", "true");
-      else scanInput.removeAttribute("aria-invalid");
+    function showFix(suggestion) {
+      pendingSuggestion = suggestion || "";
+      if (!scanFix || !scanUseSuggested) return;
+      if (!pendingSuggestion) {
+        scanFix.hidden = true;
+        return;
+      }
+      scanUseSuggested.textContent = "Use instead: " + pendingSuggestion;
+      scanFix.hidden = false;
+    }
+
+    function showError(message, suggestion) {
+      if (scanError) {
+        scanError.textContent = message;
+        scanError.hidden = !message;
+      }
+      if (message) {
+        scanInput.setAttribute("aria-invalid", "true");
+        scanInput.focus();
+        try {
+          scanInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        } catch (e) {
+          scanInput.scrollIntoView();
+        }
+      } else {
+        scanInput.removeAttribute("aria-invalid");
+      }
+      showFix(suggestion);
     }
 
     function runScan(value) {
@@ -172,11 +325,12 @@
         scanSubmit.disabled = true;
         scanSubmit.textContent = "Scanning…";
       }
-      showError(false);
+      showError("", "");
 
       window.setTimeout(function () {
         setStoredListing(value);
         setScanCompleted(true);
+        setScanStartedAt();
         renderScanResults(value);
         setScanCheckbox(true);
         syncListingIdField();
@@ -185,7 +339,7 @@
         }
         if (scanSubmit) {
           scanSubmit.disabled = false;
-          scanSubmit.textContent = "Scan free";
+          scanSubmit.textContent = "Show what I’m losing →";
         }
         scrollToScanResults();
       }, 2000);
@@ -195,17 +349,70 @@
       e.preventDefault();
       var value = String(scanInput.value || "").trim();
       if (!validateListingInput(value)) {
-        showError(true);
-        scanInput.focus();
+        var suggestion = extractNameCitySuggestion(value);
+        if (isOtherMapsUrl(value)) {
+          showError(
+            "That’s a Bing/Apple/MapQuest link — we need a Google Maps listing link. Open Google Maps, find your business, tap Share, and paste that link here.",
+            suggestion
+          );
+        } else if (/^https?:\/\//i.test(value)) {
+          showError(
+            "That doesn’t look like a Google Maps link. Use maps.google.com or google.com/maps — or type your business as Name, City (with a comma).",
+            suggestion
+          );
+        } else {
+          showError(
+            "Type your business as Name, City (with a comma), e.g. Summit Plumbing, Denver — or paste a Google Maps share link.",
+            ""
+          );
+        }
         return;
       }
       runScan(value);
     });
 
+    if (scanUseSuggested) {
+      scanUseSuggested.addEventListener("click", function () {
+        if (!pendingSuggestion) return;
+        scanInput.value = pendingSuggestion;
+        showError("", "");
+        runScan(pendingSuggestion);
+      });
+    }
+
+    var fillExample = document.getElementById("scan-fill-example");
+    if (fillExample) {
+      fillExample.addEventListener("click", function () {
+        scanInput.value = "Summit Plumbing, Denver";
+        scanInput.focus();
+        scanInput.select();
+      });
+    }
+
+    var resultsPay = document.getElementById("scan-results-pay");
+    if (resultsPay) {
+      resultsPay.addEventListener("click", function () {
+        var checkout = document.getElementById("checkout");
+        if (checkout) {
+          try {
+            checkout.scrollIntoView({ behavior: "smooth", block: "start" });
+          } catch (e) {
+            checkout.scrollIntoView();
+          }
+        }
+        window.setTimeout(function () {
+          if (typeof window.__updateCheckout === "function") {
+            window.__updateCheckout();
+          }
+        }, 50);
+      });
+    }
+
     var stored = getStoredListing();
     if (stored && getScanCompleted()) {
       scanInput.value = stored;
       renderScanResults(stored);
+      startUrgencyClock();
       setScanCheckbox(true);
       syncListingIdField();
     }
@@ -216,6 +423,7 @@
       var params = new URLSearchParams(window.location.search);
       if (params.has("session_id") || params.has("checkout_session_id")) {
         syncListingIdField();
+        setCheckoutVisible(true);
         var checkout = document.getElementById("checkout");
         if (checkout) {
           var reduceMotion =
@@ -328,46 +536,67 @@
     setCtaState(ctaSticky, canPay);
     if (hint) {
       if (!scanOk) {
-        hint.textContent = "Complete the free scan above, then check all boxes to enable payment.";
+        hint.textContent = "Run the free scan first — then check both boxes.";
         hint.hidden = false;
       } else if (!allChecked) {
-        hint.textContent = "Check all boxes to enable payment.";
+        hint.textContent = "Check both boxes to pay.";
         hint.hidden = false;
       } else if (!stripeReady) {
-        hint.textContent = "Check all boxes to enable payment.";
-        hint.hidden = false;
+        hint.hidden = true;
       } else {
         hint.hidden = true;
       }
     }
     if (stripeHint) {
-      stripeHint.hidden = !allChecked || !scanOk || stripeReady;
+      if (scanOk && allChecked && !stripeReady) {
+        stripeHint.hidden = false;
+      } else if (stripeReady) {
+        stripeHint.hidden = true;
+      } else if (!scanOk) {
+        stripeHint.hidden = true;
+      }
     }
   }
 
-  window.__updateCheckout = update;
+  setCheckoutVisible(getScanCompleted());
 
   bindCtaGuard(cta);
   bindCtaGuard(ctaSticky);
 
+  window.__updateCheckout = update;
+
   form.addEventListener("change", update);
   update();
 
-  if (stickyBar && checkout && window.matchMedia("(max-width: 767px)").matches) {
+  var stickyObserver = null;
+
+  function showStickyCheckout() {
+    if (!stickyBar || !checkout) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    if (!getScanCompleted()) return;
+
     document.body.classList.add("has-sticky");
     stickyBar.hidden = false;
 
+    if (stickyObserver) return;
+
     if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(
+      stickyObserver = new IntersectionObserver(
         function (entries) {
           var show = !entries[0].isIntersecting;
           stickyBar.classList.toggle("is-visible", show);
         },
         { root: null, rootMargin: "0px", threshold: 0 }
       );
-      observer.observe(checkout);
+      stickyObserver.observe(checkout);
     } else {
       stickyBar.classList.add("is-visible");
     }
+  }
+
+  window.__showStickyCheckout = showStickyCheckout;
+
+  if (getScanCompleted()) {
+    showStickyCheckout();
   }
 })();

@@ -1,0 +1,40 @@
+{
+  "status": "GENERATED",
+  "business_name": "Triumph Heating & Air Conditioning",
+  "listing_identifier": "https://www.google.com/maps/place/Triumph+Heating+%26+Air+Conditioning/@49.8657222,-119.574708,17z/data=!3m1!4b1!4m6!3m5!1s0x537df52ca595ef6d:0xc57d9390b5e75dbe!8m2!3d49.8657222!4d-119.5721331!16s%2Fg%2F11b5pjf9q5",
+  "session_id": "cs_demo_triumph_20260516",
+  "generated_at": "2026-05-18T00:38:50.796Z",
+  "elapsed_ms": 34,
+  "sla_target_seconds": 90,
+  "sla_met": true,
+  "outputs": {
+    "brochure": "kit-brochure.html",
+    "report": "kit-report.html"
+  },
+  "scan": {
+    "before": {
+      "score": 74,
+      "services_listed": 6,
+      "photos_estimate": 18,
+      "profile_completeness_pct": 72,
+      "qa_answered": 2,
+      "posts_last_90_days": 1
+    },
+    "after": {
+      "score": 92,
+      "services_listed": 12,
+      "photos_estimate": 28,
+      "profile_completeness_pct": 96,
+      "qa_answered": 8,
+      "posts_last_90_days": 5
+    }
+  },
+  "pipeline": [
+    "validateListingIdentifier",
+    "fetchPublicListingSnapshot",
+    "rankIssues",
+    "renderBrochureHtml",
+    "renderReportHtml",
+    "writeManifest"
+  ]
+}

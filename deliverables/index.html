@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kit deliverables — automation demo</title>
+    <style>
+      :root {
+        --teal: #0d5c63;
+        --ink: #1a1f1e;
+        --muted: #5c6563;
+        --line: #e2ddd4;
+        --paper: #faf8f4;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.5;
+      }
+      .wrap {
+        max-width: 40rem;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin: 0.25rem 0 0.75rem;
+      }
+      .eyebrow {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--teal);
+      }
+      .meta {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin: 1.25rem 0;
+      }
+      .card h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.1rem;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0 0.5rem;
+      }
+      a.btn {
+        display: inline-block;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+      a.btn--primary {
+        background: var(--teal);
+        color: #fff;
+      }
+      a.btn--ghost {
+        background: #fff;
+        color: var(--teal);
+        border: 2px solid var(--teal);
+      }
+      .tip {
+        margin-top: 1.5rem;
+        padding: 0.75rem 1rem;
+        background: #fff7ed;
+        border-left: 4px solid #ea580c;
+        font-size: 0.9rem;
+      }
+      code {
+        font-size: 0.85em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <p class="eyebrow">Automation proof</p>
+      <h1>Generated listing kits</h1>
+      <p class="meta">
+        From <code>node automation/generate-kit.mjs</code> · validated Google Maps URL + public snapshot.
+      </p>
+
+      <article class="card">
+        <h2>Triumph Heating &amp; Air Conditioning</h2>
+        <p class="meta">West Kelowna, BC · Central Okanagan</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="triumph-heating-kelowna/kit-brochure.html">Open brochure</a>
+          <a class="btn btn--ghost" href="triumph-heating-kelowna/kit-report.html">Open report (paste blocks)</a>
+        </div>
+        <p class="meta">
+          <a href="triumph-heating-kelowna/generation-manifest.json">generation-manifest.json</a>
+        </p>
+      </article>
+
+      <div class="tip">
+        <strong>Link won’t open?</strong> Don’t use <code>file://</code> from chat. Run
+        <code>start5173.bat</code> in the project folder, then open
+        <a href="http://localhost:5173/deliverables/">http://localhost:5173/deliverables/</a>
+        or on GitHub Pages:
+        <a href="https://alphapulsx-jpg.github.io/Google-BP/deliverables/">alphapulsx-jpg.github.io/Google-BP/deliverables/</a>
+      </div>
+
+      <p class="meta" style="margin-top: 1.5rem">
+        <a href="../index.html">← Back to landing</a>
+      </p>
+    </div>
+  </body>
+</html>

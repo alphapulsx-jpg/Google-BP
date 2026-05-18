@@ -1,47 +1,84 @@
-# Free launch checklist (1-question Form + Stripe email, no Zapier v1)
+# Free launch checklist — scan-first, one page
 
-Use this for a **one-page** impulse-buy flow: pay on Stripe → land on `#intake` → paste **one** identifier → confirm on a **1-question** Google Form → team gets **Gmail** on submit.
+Impulse flow: **paste Maps link → free scan → pay $129.99 → kit by email** (~90s when automation is live).
 
-## 1. Google Form (one question)
+See **`docs/TODO.md`** for your full prioritized list.
 
-1. In [Google Forms](https://forms.google.com), create a form with **one** required short-answer question: **Listing link or business name + city**.
-2. **Do not** add an email field — Stripe collects email at checkout.
-3. **Optional:** add a second short-answer field **`session_id`** (for linking to Sheet rows); keep it out of the visible title or label it “Order reference (auto-filled)”.
-4. **Responses** → **Link to Sheets** (recommended).
-5. **Responses** → **⋮** → **Get email notifications for new responses** → **alphapulsx@gmail.com** (or forward form-owner inbox there).
+---
 
-## 2. Wire prefill IDs into the landing page
+## 1. Push the site (required)
 
-1. In the form editor: **⋮** → **Get pre-filled link** → note `entry.XXXXXXXX` for the listing question (and session field if used).
-2. In **`app.js`**, set:
-   - `GOOGLE_FORM_BASE` → `https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform`
-   - `ENTRY_LISTING` → your listing field entry id (without `entry.` prefix in the constant — code adds `entry.`).
-   - `ENTRY_SESSION` → session field entry id (optional).
+These must be on `main` for GitHub Pages:
 
-The **`#intake`** section already has **`#listing-id`** + **Submit** (no iframe).
+- `index.html`, `app.js`, `styles.css`
+- `sample-triumph-report.html`, `sample-triumph-brochure.html` (example deliverable)
+- Optional: `deliverables/`, `automation/generate-kit.mjs`
 
-## 3. Stripe Payment Link
+Enable **GitHub Pages** → branch **`main`**, folder **`/` (root)**.
 
-1. Create Payment Link for **$129.99**.
-2. **After payment** → **Redirect**:
+**Local preview:** double-click **`start5173.bat`** → http://localhost:5173/
+
+---
+
+## 2. Stripe Payment Link ($129.99)
+
+1. Create Payment Link for **$129.99** (one-time).
+2. **After payment** redirect:
    ```
-   https://alphapulsx-jpg.github.io/Google-BP/?session_id={CHECKOUT_SESSION_ID}#intake
+   https://alphapulsx-jpg.github.io/Google-BP/?session_id={CHECKOUT_SESSION_ID}#checkout
    ```
-3. Set **`data-stripe-url`** on **`#pay-cta`** in **`index.html`** to your live `https://buy.stripe.com/…` link.
+3. In **`index.html`**, set on **`#pay-cta`**:
+   ```html
+   data-stripe-url="https://buy.stripe.com/YOUR_LIVE_LINK"
+   ```
+4. Until this is set, pay stays disabled; customers see a hint to email you after scan + checkboxes.
 
-**Never** commit Stripe secret keys or `whsec_…` to this repo.
+**Never** commit Stripe secret keys or `whsec_…`.
 
-## 4. Stripe email (customer)
+---
 
-- Stripe sends the **receipt** to the email entered at checkout — that is **`customer_email`** for fulfillment.
-- Form responses do **not** need to duplicate email.
+## 3. Smoke test (live site)
 
-## 5. Smoke test
+1. Open the live URL (not `file://`).
+2. Paste a **Google Maps** share link (e.g. Triumph Heating Kelowna) → **Show what I’m losing →**
+3. Confirm **scan results** appear and **checkout** section unlocks below.
+4. Check both boxes → pay opens Stripe in a new tab.
+5. After test payment, confirm redirect with `?session_id=…` lands on **#checkout**.
+6. Open **Example deliverable** in footer — brochure + report load.
 
-1. Open live GitHub Pages URL.
-2. Test payment (Stripe test mode or small live charge).
-3. Confirm redirect to **`#intake`** with optional `session_id` in the URL.
-4. Paste a test listing link → **Submit** → prefilled Form opens → submit once.
-5. Confirm **alphapulsx@gmail.com** gets the Form notification and (if linked) a Sheet row.
+---
 
-For full automation (webhook + Sheet merge), see **`docs/automation-full-stack.md`** and **`docs/owner-checklist.md`**.
+## 4. Deliver a paid order (until webhook automation)
+
+1. Get customer **Maps URL** (from scan metadata, email, or Form).
+2. Create or edit a profile under **`automation/listing-profiles/`** (copy `triumph-heating-kelowna.json`).
+3. Run:
+   ```bash
+   node automation/generate-kit.mjs automation/listing-profiles/CLIENT.json deliverables/CLIENT-SLUG
+   ```
+4. Email **`kit-report.html`** + **`kit-brochure.html`** to Stripe **customer_email** (Print → PDF optional).
+5. Mark order **SENT** in your Sheet.
+
+---
+
+## 5. Optional: Google Form backup
+
+Only if Checkout does not pass `listing_identifier` yet:
+
+1. One required question: **Listing link or business name + city** (no email field).
+2. Optional **`session_id`** field (prefilled from URL after pay).
+3. Wire **`mergeFormResponseBySessionId_`** in **`automation/Code.gs`** on form submit.
+
+---
+
+## 6. Full automation (later)
+
+**`docs/owner-checklist.md`** + **`docs/automation-full-stack.md`** — webhook, Sheet, Doc template, approval gate, Gmail send.
+
+---
+
+## Links
+
+- Live site: https://alphapulsx-jpg.github.io/Google-BP/
+- Sample report: https://alphapulsx-jpg.github.io/Google-BP/sample-triumph-report.html
+- Support: alphapulsx@gmail.com
