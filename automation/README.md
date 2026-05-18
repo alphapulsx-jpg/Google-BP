@@ -7,7 +7,9 @@ HTML files under `deliverables/` and `sample-triumph-*.html` are **dev previews 
 
 ## Deploy (one time)
 
-1. Create a **Google Sheet** (orders log) with headers:  
+1. Enable **Google Places API (New)** in Google Cloud → create API key → Script property **`GOOGLE_PLACES_API_KEY`**
+2. Add **`PlacesScan.gs`** and **`Code.gs`** to the same Apps Script project
+3. Create a **Google Sheet** (orders log) with headers:  
    `session_id | customer_email | listing_identifier | status | doc_url | approved | sent | notes`
 2. Create a **Google Doc** template — see **`doc-template-placeholders.md`**
 3. New **Apps Script** project (bound to Sheet or standalone) → paste **`Code.gs`**
@@ -33,8 +35,8 @@ HTML files under `deliverables/` and `sample-triumph-*.html` are **dev previews 
 
 ## Flow
 
-1. Customer scans on site → listing in `sessionStorage`
-2. Pay → browser opens **`{CHECKOUT_API}?action=create_checkout&listing=…`** (GET redirect to Stripe Checkout; listing in **metadata**)
+1. Customer scans on site → **JSONP** to **`?action=scan&listing=…`** → real Places completeness score + issues
+2. Pay → **`?action=create_checkout&listing=…`** → Stripe Checkout (listing in **metadata**)
 3. Stripe webhook → validate Maps link → generate kit → copy template Doc → fill placeholders → export **PDF** → **Gmail** to customer (if `AUTO_SEND_TO_CUSTOMER=true`)
 4. Invalid Maps link → **automatic refund** + Sheet status `INVALID_LISTING`
 

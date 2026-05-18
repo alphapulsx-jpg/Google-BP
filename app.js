@@ -4,21 +4,22 @@
   var STORAGE_LISTING = "listing_identifier";
   var STORAGE_SCAN_OK = "scan_completed";
   var STORAGE_SCAN_AT = "scan_completed_at";
+  var STORAGE_SCAN_DATA = "scan_result_json";
 
   var urgencyTimerId = null;
+
+  function getAutomationApiBase() {
+    var body = document.body;
+    return body ? String(body.getAttribute("data-checkout-api") || "").trim() : "";
+  }
+
+  function isAutomationApiConfigured(url) {
+    return /^https:\/\/script\.google\.com\//i.test(url);
+  }
 
   var y = document.getElementById("y");
   if (y) {
     y.textContent = String(new Date().getFullYear());
-  }
-
-  function hashString(str) {
-    var h = 0;
-    for (var i = 0; i < str.length; i++) {
-      h = (h << 5) - h + str.charCodeAt(i);
-      h |= 0;
-    }
-    return Math.abs(h);
   }
 
   function isValidMapsUrl(value) {
@@ -96,26 +97,6 @@
       return isValidMapsUrl(trimmed);
     }
     return isValidNameCity(trimmed);
-  }
-
-  var ISSUE_POOL = [
-    "Wrong category — every minute you show up for the wrong search, the right customer calls your competitor.",
-    "Thin services list — emergency & suburb keywords missing; those searches skip you entirely.",
-    "Too few photos — rivals with full galleries steal the map click while your listing looks dead.",
-    "Weak description — no license, area, or urgency in line one; shoppers bounce in seconds.",
-    "Blank Q&A — “Licensed?” “Same-day?” unanswered; they call the business that already answered.",
-    "Stale posts — inactive profile signals “might be closed”; Google and buyers move on.",
-    "Unanswered reviews — silence on 3★ stars costs more trust than the rating number.",
-    "Incomplete hours/attributes — after-hours jobs and “online estimates” go to whoever has them on.",
-  ];
-
-  function pickIssues(seed, count) {
-    var issues = [];
-    var start = seed % ISSUE_POOL.length;
-    for (var i = 0; i < count; i++) {
-      issues.push(ISSUE_POOL[(start + i) % ISSUE_POOL.length]);
-    }
-    return issues;
   }
 
   function setScanStartedAt() {
@@ -217,27 +198,88 @@
     }
   }
 
-  function isLikelyStrongListing(input) {
-    var v = String(input || "").toLowerCase();
-    return v.indexOf("triumph") !== -1 || v.indexOf("maps.google") !== -1 || v.indexOf("google.com/maps") !== -1;
+  function storeScanData(data) {
+    try {
+      sessionStorage.setItem(STORAGE_SCAN_DATA, JSON.stringify(data));
+    } catch (e) {
+      /* ignore */
+    }
   }
 
-  function renderScanResults(input) {
-    var seed = hashString(input.toLowerCase());
-    var strong = isLikelyStrongListing(input);
-    var before = strong ? 70 + (seed % 6) : 58 + (seed % 14);
-    var after = strong ? 90 + (seed % 4) : 86 + (seed % 8);
+  function getStoredScanData() {
+    try {
+      var raw = sessionStorage.getItem(STORAGE_SCAN_DATA);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function fetchRealScan(listing, done) {
+    var base = getAutomationApiBase();
+    if (!isAutomationApiConfigured(base)) {
+      done({
+        ok: false,
+        error:
+          "Real scan is not connected. Set data-checkout-api on the page to your deployed Apps Script URL (see automation/README.md).",
+      });
+      return;
+    }
+
+    var cbName = "listingScanCb_" + String(Date.now());
+    var sep = base.indexOf("?") === -1 ? "?" : "&";
+    var url =
+      base +
+      sep +
+      "action=scan&listing=" +
+      encodeURIComponent(listing) +
+      "&callback=" +
+      cbName;
+
+    var timeout = window.setTimeout(function () {
+      if (window[cbName]) {
+        delete window[cbName];
+        done({ ok: false, error: "Scan timed out. Try again in a moment." });
+      }
+    }, 45000);
+
+    window[cbName] = function (payload) {
+      window.clearTimeout(timeout);
+      delete window[cbName];
+      var script = document.getElementById("listing-scan-jsonp");
+      if (script && script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+      done(payload || { ok: false, error: "Empty scan response." });
+    };
+
+    var script = document.createElement("script");
+    script.id = "listing-scan-jsonp";
+    script.src = url;
+    script.onerror = function () {
+      window.clearTimeout(timeout);
+      delete window[cbName];
+      done({ ok: false, error: "Could not reach the scan service. Check data-checkout-api URL." });
+    };
+    document.head.appendChild(script);
+  }
+
+  function renderScanResults(scan) {
+    if (!scan || !scan.ok) {
+      return;
+    }
+
     var beforeEl = document.getElementById("scan-score-before");
     var afterEl = document.getElementById("scan-score-after");
     var issuesList = document.getElementById("scan-issues-list");
     var resultsSection = document.getElementById("scan-results");
 
-    if (beforeEl) beforeEl.textContent = String(before);
-    if (afterEl) afterEl.textContent = String(after);
+    if (beforeEl) beforeEl.textContent = String(scan.completeness_before);
+    if (afterEl) afterEl.textContent = String(scan.completeness_after);
 
     if (issuesList) {
       issuesList.innerHTML = "";
-      var issues = pickIssues(seed, 3);
+      var issues = scan.issues || [];
       for (var i = 0; i < issues.length; i++) {
         var li = document.createElement("li");
         li.textContent = issues[i];
@@ -327,22 +369,29 @@
       }
       showError("", "");
 
-      window.setTimeout(function () {
+      fetchRealScan(value, function (scan) {
+        if (scanSubmit) {
+          scanSubmit.disabled = false;
+          scanSubmit.textContent = "Show what I’m losing →";
+        }
+
+        if (!scan.ok) {
+          showError(scan.error || "Scan failed. Check your link and try again.", "");
+          return;
+        }
+
         setStoredListing(value);
+        storeScanData(scan);
         setScanCompleted(true);
         setScanStartedAt();
-        renderScanResults(value);
+        renderScanResults(scan);
         setScanCheckbox(true);
         syncListingIdField();
         if (typeof window.__updateCheckout === "function") {
           window.__updateCheckout();
         }
-        if (scanSubmit) {
-          scanSubmit.disabled = false;
-          scanSubmit.textContent = "Show what I’m losing →";
-        }
         scrollToScanResults();
-      }, 2000);
+      });
     }
 
     scanForm.addEventListener("submit", function (e) {
@@ -411,8 +460,11 @@
     var stored = getStoredListing();
     if (stored && getScanCompleted()) {
       scanInput.value = stored;
-      renderScanResults(stored);
-      startUrgencyClock();
+      var cached = getStoredScanData();
+      if (cached && cached.ok) {
+        renderScanResults(cached);
+        startUrgencyClock();
+      }
       setScanCheckbox(true);
       syncListingIdField();
     }

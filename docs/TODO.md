@@ -7,10 +7,10 @@
 
 ## Done in repo (code ready to deploy)
 
-- [x] **`automation/Code.gs`** — Checkout session with `listing_identifier` metadata, webhook fulfillment, Doc fill, PDF export, Gmail send
-- [x] Landing pay button targets **Apps Script** `?action=create_checkout&listing=…` when `data-checkout-api` is set
-- [x] Doc template placeholder list — **`automation/doc-template-placeholders.md`**
-- [x] `generate-kit.mjs` — **dev-only** preview (optional)
+- [x] **`automation/PlacesScan.gs`** — real Google Places API scan + deterministic completeness score
+- [x] **`automation/Code.gs`** — scan JSONP, checkout, webhook → Doc + PDF email
+- [x] Landing calls **`?action=scan`** — **no fake scores** (errors if API not configured)
+- [x] Scoring doc — **`docs/scoring.md`**
 
 ---
 
@@ -19,7 +19,8 @@
 ### 1. Google backend
 
 - [ ] Create **Sheet** + **Doc template** (placeholders from `doc-template-placeholders.md`)
-- [ ] Paste **`automation/Code.gs`** into Apps Script; set **Script properties** (Stripe keys, Sheet ID, template Doc ID, `AUTO_SEND_TO_CUSTOMER=true`)
+- [ ] Paste **`automation/Code.gs`** + **`automation/PlacesScan.gs`** into Apps Script
+- [ ] Set **Script properties**: `GOOGLE_PLACES_API_KEY` (**required**), Stripe keys, Sheet ID, template Doc ID, `AUTO_SEND_TO_CUSTOMER=true`
 - [ ] **Deploy Web app** (Me / Anyone) → copy URL
 - [ ] Set on site: `data-checkout-api="YOUR_WEB_APP_URL"` on `<body>` in `index.html` → **push**
 

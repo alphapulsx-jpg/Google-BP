@@ -27,9 +27,23 @@ function doGet(e) {
   if (params.action === 'create_checkout') {
     return handleCreateCheckout_(params.listing || '');
   }
+  if (params.action === 'scan') {
+    return handleScanRequest_(params.listing || '', params.callback || '');
+  }
   return HtmlService.createHtmlOutput(
-    '<p>Google listing kit automation. Use <code>?action=create_checkout&amp;listing=…</code> from the landing page pay button.</p>'
+    '<p>Google listing kit automation. Actions: <code>scan</code>, <code>create_checkout</code> + <code>listing</code>.</p>'
   );
+}
+
+/** JSON or JSONP for real Places scan (used by landing page) */
+function handleScanRequest_(listing, callback) {
+  var result = runListingScan_(listing);
+  var json = JSON.stringify(result);
+  if (callback) {
+    return ContentService.createTextOutput(callback + '(' + json + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
 }
 
 /** Stripe webhook POST */
@@ -170,13 +184,34 @@ function handleCheckoutCompleted_(session) {
     return;
   }
 
-  fulfillPaidOrder_(sessionId, customerEmail, listing);
+  var scan = runListingScan_(listing);
+  if (!scan.ok) {
+    appendSheetRow_(sessionId, customerEmail, listing, 'INVALID_LISTING');
+    refundCheckoutSession_(session);
+    notifyOwner_('Refunded — listing not found: ' + sessionId, scan.error || '');
+    return;
+  }
+
+  fulfillPaidOrder_(sessionId, customerEmail, listing, scan);
 }
 
-function fulfillPaidOrder_(sessionId, customerEmail, listing) {
+function fulfillPaidOrder_(sessionId, customerEmail, listing, scanResult) {
   appendSheetRow_(sessionId, customerEmail, listing, 'FULFILLING');
 
-  var kit = generateKitContent_(listing);
+  var scan = scanResult || runListingScan_(listing);
+  if (!scan.ok) {
+    throw new Error(scan.error || 'Scan failed during fulfillment');
+  }
+
+  var kit = buildKitFromScan_(scan, listing);
+  var openAiKey = PropertiesService.getScriptProperties().getProperty(PROP_OPENAI_KEY);
+  if (openAiKey) {
+    try {
+      kit = enhanceKitWithOpenAi_(kit, listing, openAiKey);
+    } catch (err) {
+      Logger.log('OpenAI enhance skipped: ' + err);
+    }
+  }
   var docUrl = createAndFillKitDoc_(sessionId, customerEmail, listing, kit);
   var docId = docUrl.replace(/.*\/d\//, '').replace(/\/.*$/, '');
   var pdfBlob = exportDocAsPdf_(docId, kit.business_name + ' — listing kit.pdf');
@@ -198,93 +233,22 @@ function fulfillPaidOrder_(sessionId, customerEmail, listing) {
 
 /** Manual test: Run from Apps Script editor with a Maps URL */
 function testFulfillSampleListing() {
-  fulfillPaidOrder_('test_manual_' + Date.now(), Session.getActiveUser().getEmail(), 'Triumph Heating, Kelowna');
-}
-
-function generateKitContent_(listingIdentifier) {
-  var parsed = parseListingIdentifier_(listingIdentifier);
-  var seed = hashString_(listingIdentifier.toLowerCase());
-  var strong = isMapsUrl_(listingIdentifier);
-  var before = strong ? 70 + (seed % 6) : 58 + (seed % 14);
-  var after = strong ? 90 + (seed % 4) : 86 + (seed % 8);
-
-  var issues = pickIssues_(seed);
-  var openAiKey = PropertiesService.getScriptProperties().getProperty(PROP_OPENAI_KEY);
-  if (openAiKey) {
-    try {
-      return generateKitWithOpenAi_(listingIdentifier, parsed, before, after, issues, openAiKey);
-    } catch (err) {
-      Logger.log('OpenAI fallback: ' + err);
-    }
+  var listing = 'https://www.google.com/maps/place/Triumph+Heating+%26+Air+Conditioning/@49.8657222,-119.5721331,17z';
+  var scan = runListingScan_(listing);
+  if (!scan.ok) {
+    throw new Error(scan.error);
   }
-
-  return buildKitFromRules_(parsed, listingIdentifier, before, after, issues);
+  fulfillPaidOrder_('test_manual_' + Date.now(), Session.getActiveUser().getEmail(), listing, scan);
 }
 
-function buildKitFromRules_(parsed, listingIdentifier, before, after, issues) {
-  var name = parsed.business_name;
-  var city = parsed.city_region;
-  var desc =
-    name +
-    ' — trusted local service in ' +
-    city +
-    '. Licensed and insured. Call today for fast scheduling. ' +
-    listingIdentifier;
-
-  var services =
-    '• Emergency service\n• Installation\n• Repair & maintenance\n• Free estimates\n• Residential & commercial';
-
-  var qa =
-    'Q: Are you licensed?\nA: Yes — we are fully licensed and insured in our service area.\n\n' +
-    'Q: Do you offer emergency service?\nA: Contact us for availability and same-day options when possible.\n\n' +
-    'Q: What areas do you serve?\nA: We serve ' +
-    city +
-    ' and nearby communities.';
-
-  var posts =
-    'Post 1: Seasonal tune-up reminder for ' +
-    city +
-    ' homeowners.\n\n' +
-    'Post 2: 24/7 emergency — call now.\n\n' +
-    'Post 3: Financing may be available — ask when you book.';
-
-  return {
-    business_name: name,
-    city_region: city,
-    listing_url: listingIdentifier,
-    completeness_before: String(before),
-    completeness_after: String(after),
-    strengths: 'Strong local presence — this kit completes categories, services, posts, and Q&A.',
-    issue_1_title: issues[0].title,
-    issue_1_why: issues[0].why,
-    issue_1_where: issues[0].where,
-    issue_2_title: issues[1].title,
-    issue_2_why: issues[1].why,
-    issue_2_where: issues[1].where,
-    issue_3_title: issues[2].title,
-    issue_3_why: issues[2].why,
-    issue_3_where: issues[2].where,
-    description_paste: desc.slice(0, 750),
-    services_paste: services,
-    qa_block: qa,
-    posts_block: posts,
-    photo_checklist:
-      '• Storefront or branded vehicle\n• Job-site before/after (3 sets)\n• Team in uniform\n• Equipment close-up',
-    competitor_note:
-      'Local map results are competitive — complete services and weekly posts defend visibility even with good reviews.',
-  };
-}
-
-function generateKitWithOpenAi_(listingIdentifier, parsed, before, after, issues, apiKey) {
+function enhanceKitWithOpenAi_(kit, listingIdentifier, apiKey) {
   var prompt =
-    'Generate a Google Business Profile DIY kit as JSON with keys: description_paste (max 750 chars), services_paste, qa_block, posts_block, competitor_note. ' +
-    'Business: ' +
-    parsed.business_name +
-    ', area: ' +
-    parsed.city_region +
+    'Improve these Google Business Profile paste blocks. Return JSON keys: description_paste, services_paste, qa_block, posts_block. ' +
+    'Keep facts; business: ' +
+    kit.business_name +
     '. Listing: ' +
     listingIdentifier +
-    '. Trade: home service. No ranking guarantees.';
+    '. Max 750 chars description.';
 
   var resp = UrlFetchApp.fetch('https://api.openai.com/v1/chat/completions', {
     method: 'post',
@@ -292,7 +256,10 @@ function generateKitWithOpenAi_(listingIdentifier, parsed, before, after, issues
     headers: { Authorization: 'Bearer ' + apiKey },
     payload: JSON.stringify({
       model: 'gpt-4o-mini',
-      messages: [{ role: 'user', content: prompt }],
+      messages: [
+        { role: 'user', content: prompt },
+        { role: 'user', content: JSON.stringify({ description_paste: kit.description_paste }) },
+      ],
       response_format: { type: 'json_object' },
     }),
     muteHttpExceptions: true,
@@ -304,31 +271,11 @@ function generateKitWithOpenAi_(listingIdentifier, parsed, before, after, issues
 
   var data = JSON.parse(resp.getContentText());
   var content = JSON.parse(data.choices[0].message.content);
-
-  return {
-    business_name: parsed.business_name,
-    city_region: parsed.city_region,
-    listing_url: listingIdentifier,
-    completeness_before: String(before),
-    completeness_after: String(after),
-    strengths: 'Generated from your public listing snapshot.',
-    issue_1_title: issues[0].title,
-    issue_1_why: issues[0].why,
-    issue_1_where: issues[0].where,
-    issue_2_title: issues[1].title,
-    issue_2_why: issues[1].why,
-    issue_2_where: issues[1].where,
-    issue_3_title: issues[2].title,
-    issue_3_why: issues[2].why,
-    issue_3_where: issues[2].where,
-    description_paste: content.description_paste || '',
-    services_paste: content.services_paste || '',
-    qa_block: content.qa_block || '',
-    posts_block: content.posts_block || '',
-    photo_checklist:
-      '• Storefront or branded vehicle\n• Job-site before/after\n• Team photo\n• Equipment badge',
-    competitor_note: content.competitor_note || '',
-  };
+  if (content.description_paste) kit.description_paste = String(content.description_paste).slice(0, 750);
+  if (content.services_paste) kit.services_paste = content.services_paste;
+  if (content.qa_block) kit.qa_block = content.qa_block;
+  if (content.posts_block) kit.posts_block = content.posts_block;
+  return kit;
 }
 
 function createAndFillKitDoc_(sessionId, customerEmail, listingIdentifier, kit) {
@@ -511,37 +458,6 @@ function parseListingIdentifier_(listing) {
   return { business_name: name, city_region: 'your area' };
 }
 
-function pickIssues_(seed) {
-  var pool = [
-    {
-      title: 'Primary category & services keywords',
-      why: 'Thin services let competitors capture high-intent map searches.',
-      where: 'Business Profile → Edit profile → Category & Services',
-    },
-    {
-      title: 'Business description & attributes',
-      why: 'Missing licence, emergency, and financing in the first screen loses trust.',
-      where: 'Edit profile → Description & Attributes',
-    },
-    {
-      title: 'Q&A, posts & review replies',
-      why: 'Stale posts and blank Q&A signal an inactive profile.',
-      where: 'Profile → Q&A · Posts · Reviews',
-    },
-  ];
-  var start = seed % pool.length;
-  return [pool[start], pool[(start + 1) % pool.length], pool[(start + 2) % pool.length]];
-}
-
-function hashString_(str) {
-  var h = 0;
-  for (var i = 0; i < str.length; i++) {
-    h = (h << 5) - h + str.charCodeAt(i);
-    h |= 0;
-  }
-  return Math.abs(h);
-}
-
 function appendSheetRow_(sessionId, customerEmail, listingIdentifier, status) {
   var props = PropertiesService.getScriptProperties();
   var sheetId = props.getProperty(PROP_SHEET_ID);
@@ -619,7 +535,13 @@ function mergeFormResponseBySessionId_(sessionId, listingIdentifier) {
       sh.getRange(r + 1, col.listing_identifier + 1).setValue(listingIdentifier);
       var email = data[r][col.customer_email];
       try {
-        fulfillPaidOrder_(sessionId, email, listingIdentifier);
+        var scan = runListingScan_(listingIdentifier);
+        if (!scan.ok) {
+          sh.getRange(r + 1, col.status + 1).setValue('INVALID_LISTING');
+          sh.getRange(r + 1, col.notes + 1).setValue(scan.error || '');
+          return true;
+        }
+        fulfillPaidOrder_(sessionId, email, listingIdentifier, scan);
       } catch (e) {
         sh.getRange(r + 1, col.status + 1).setValue('NEEDS_GENERATION');
         sh.getRange(r + 1, col.notes + 1).setValue(String(e));
