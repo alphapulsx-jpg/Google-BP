@@ -453,20 +453,48 @@
   var stickyBar = document.getElementById("sticky-bar");
   var checkout = document.getElementById("checkout");
 
+  function getCheckoutApiBase() {
+    var body = document.body;
+    var fromBody = body ? String(body.getAttribute("data-checkout-api") || "").trim() : "";
+    if (fromBody) return fromBody;
+    if (cta) return String(cta.getAttribute("data-checkout-api") || "").trim();
+    return "";
+  }
+
   function getStripePaymentUrl() {
     if (!cta) return "";
     return String(cta.getAttribute("data-stripe-url") || "").trim();
+  }
+
+  function isCheckoutApiConfigured(url) {
+    return /^https:\/\/script\.google\.com\//i.test(url);
   }
 
   function isStripePaymentConfigured(url) {
     return /^https:\/\/buy\.stripe\.com\//i.test(url);
   }
 
-  function applyCheckoutHref(url) {
-    var safe = isStripePaymentConfigured(url) ? url : "#checkout";
+  function buildAutomatedCheckoutUrl(listing) {
+    var base = getCheckoutApiBase();
+    if (!isCheckoutApiConfigured(base) || !listing) return "";
+    var sep = base.indexOf("?") === -1 ? "?" : "&";
+    return (
+      base +
+      sep +
+      "action=create_checkout&listing=" +
+      encodeURIComponent(listing)
+    );
+  }
+
+  function applyCheckoutHref(listing) {
+    var automated = buildAutomatedCheckoutUrl(listing);
+    var stripeUrl = getStripePaymentUrl();
+    var safe = automated || (isStripePaymentConfigured(stripeUrl) ? stripeUrl : "#checkout");
+    var opensNewTab = !automated && isStripePaymentConfigured(stripeUrl);
+
     if (cta) {
       cta.setAttribute("href", safe);
-      if (isStripePaymentConfigured(url)) {
+      if (opensNewTab) {
         cta.setAttribute("target", "_blank");
         cta.setAttribute("rel", "noopener noreferrer");
       } else {
@@ -476,7 +504,7 @@
     }
     if (ctaSticky) {
       ctaSticky.setAttribute("href", safe);
-      if (isStripePaymentConfigured(url)) {
+      if (opensNewTab) {
         ctaSticky.setAttribute("target", "_blank");
         ctaSticky.setAttribute("rel", "noopener noreferrer");
       } else {
@@ -528,10 +556,13 @@
       }
     }
     var scanOk = getScanCompleted();
+    var listing = getStoredListing();
+    var checkoutApi = getCheckoutApiBase();
     var stripeUrl = getStripePaymentUrl();
-    var stripeReady = isStripePaymentConfigured(stripeUrl);
-    var canPay = allChecked && scanOk && stripeReady;
-    applyCheckoutHref(stripeUrl);
+    var checkoutReady =
+      isCheckoutApiConfigured(checkoutApi) || isStripePaymentConfigured(stripeUrl);
+    var canPay = allChecked && scanOk && checkoutReady;
+    applyCheckoutHref(listing);
     setCtaState(cta, canPay);
     setCtaState(ctaSticky, canPay);
     if (hint) {
@@ -541,18 +572,16 @@
       } else if (!allChecked) {
         hint.textContent = "Check both boxes to pay.";
         hint.hidden = false;
-      } else if (!stripeReady) {
+      } else if (!checkoutReady) {
         hint.hidden = true;
       } else {
         hint.hidden = true;
       }
     }
     if (stripeHint) {
-      if (scanOk && allChecked && !stripeReady) {
+      if (scanOk && allChecked && !checkoutReady) {
         stripeHint.hidden = false;
-      } else if (stripeReady) {
-        stripeHint.hidden = true;
-      } else if (!scanOk) {
+      } else {
         stripeHint.hidden = true;
       }
     }

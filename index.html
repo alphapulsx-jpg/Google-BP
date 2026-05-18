@@ -110,7 +110,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-checkout-api="">
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="hero">
@@ -505,6 +505,7 @@
               class="btn btn--primary btn--lg is-disabled"
               href="#checkout"
               data-stripe-url=""
+              data-checkout-api=""
               aria-disabled="true"
               tabindex="-1"
               aria-label="Get my kit — one-time fee $129.99"
@@ -513,9 +514,9 @@
           </div>
           <p class="checkout__next">Pay now — kit in <strong>~90 seconds</strong>. Paste tonight. Tomorrow’s searches stop going to the guy above you on Maps.</p>
           <p id="prequal-stripe-hint" class="hint hint--stripe" role="status" hidden>
-            Checkout is not live yet — email
-            <a href="mailto:alphapulsx@gmail.com">alphapulsx@gmail.com</a>
-            to pay manually, or connect Stripe on <code>#pay-cta</code> (<code>data-stripe-url</code>).
+            Automated checkout is not connected yet. Set <code>data-checkout-api</code> on
+            <code>&lt;body&gt;</code> to your deployed Apps Script web app URL (see
+            <code>automation/README.md</code>).
           </p>
         </div>
       </section>
@@ -573,9 +574,6 @@
         <p class="site-footer__legal">
           Not affiliated with Google. Google Business Profile is a trademark of Google LLC. ©
           <span id="y"></span> · service by email — kit in ~90 seconds after pay
-        </p>
-        <p class="site-footer__demo">
-          <a href="sample-triumph-report.html">Example deliverable</a> (sample business — not your order)
         </p>
       </div>
     </footer>
